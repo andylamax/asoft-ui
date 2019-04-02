@@ -4,6 +4,7 @@ import com.asofttz.ui.react.tools.StyledProps
 import kotlinx.css.Display
 import kotlinx.css.GridTemplateAreas
 import kotlinx.css.pct
+import kotlinx.html.js.onClickFunction
 import react.*
 import styled.css
 import styled.styledDiv
@@ -22,6 +23,7 @@ class GridLayout(p: Props) : RComponent<GridLayout.Props, RState>(p) {
             width = 100.pct
             +props.css
         }
+        attrs.onClickFunction = {props.onClick()}
         props.children()
     }
 }

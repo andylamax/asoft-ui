@@ -3,6 +3,7 @@ package com.asofttz.ui.react.layout
 import com.asofttz.ui.react.tools.StyledProps
 import kotlinx.css.Position
 import kotlinx.css.pct
+import kotlinx.html.js.onClickFunction
 import react.RBuilder
 import react.RComponent
 import react.RHandler
@@ -21,6 +22,7 @@ class StackedLayout(p: StyledProps) : RComponent<StyledProps, RState>(p) {
             }
             +props.css
         }
+        attrs.onClickFunction = {props.onClick()}
         props.children()
     }
 }

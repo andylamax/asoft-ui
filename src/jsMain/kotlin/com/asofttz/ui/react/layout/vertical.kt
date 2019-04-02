@@ -6,6 +6,7 @@ import kotlinx.css.Align
 import kotlinx.css.Display
 import kotlinx.css.FlexDirection
 import kotlinx.css.pct
+import kotlinx.html.js.onClickFunction
 import react.RBuilder
 import react.RComponent
 import react.RHandler
@@ -32,6 +33,7 @@ class VerticalLayout(p: Props) : RComponent<Props, RState>(p) {
                 }
             +props.css
         }
+        attrs.onClickFunction = {props.onClick()}
         props.children()
     }
 }

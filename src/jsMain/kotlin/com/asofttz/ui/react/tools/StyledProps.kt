@@ -7,6 +7,7 @@ import react.RProps
 
 abstract class StyledProps : RProps {
     var css: CSSBuilder.() -> Unit = {}
+    var onClick = {}
 }
 
 fun <P : StyledProps> RElementBuilder<P>.css(builder: CSSBuilder.() -> Unit) {

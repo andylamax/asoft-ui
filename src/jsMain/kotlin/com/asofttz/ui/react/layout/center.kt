@@ -5,6 +5,7 @@ import kotlinx.css.Align
 import kotlinx.css.Display
 import kotlinx.css.JustifyContent
 import kotlinx.css.pct
+import kotlinx.html.js.onClickFunction
 import react.RBuilder
 import react.RComponent
 import react.RHandler
@@ -22,6 +23,7 @@ class CenterLayout(p: StyledProps) : RComponent<StyledProps, RState>(p) {
             height = 100.pct
             +props.css
         }
+        attrs.onClickFunction = { props.onClick() }
         props.children()
     }
 }

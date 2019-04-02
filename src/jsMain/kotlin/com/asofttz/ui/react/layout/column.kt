@@ -6,6 +6,7 @@ import kotlinx.css.Display
 import kotlinx.css.Gap
 import kotlinx.css.GridTemplateColumns
 import kotlinx.css.pct
+import kotlinx.html.js.onClickFunction
 import react.RBuilder
 import react.RComponent
 import react.RHandler
@@ -28,6 +29,7 @@ class ColumnLayout(p: Props) : RComponent<Props, RState>(p) {
             height = 100.pct
             +props.css
         }
+        attrs.onClickFunction = {props.onClick()}
         props.children()
     }
 }
