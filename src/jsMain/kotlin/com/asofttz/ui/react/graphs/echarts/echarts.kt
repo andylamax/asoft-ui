@@ -16,8 +16,8 @@ external interface Option {
     var tooltip: Tooltip
     var toolbox: Toolbox
     var legend: Legend
-    var xAxis: XAxis
-    var yAxis: YAxis
+    var xAxis: Array<XAxis>
+    var yAxis: Array<YAxis>
     var series: Array<Series>
     var color: Array<String>
     var calculable: Boolean
@@ -44,7 +44,10 @@ external interface Legend: Alignment {
 external interface Axis {
     var type: String
     var data: Array<String>
+    var axisTick: AXisTick
 }
+
+external interface AXisTick : Showable
 
 external interface XAxis : Axis
 
@@ -76,6 +79,7 @@ external interface Alignment {
     var x: String
     var y: String
 }
+
 
 external interface Normal : Showable
 

@@ -33,12 +33,16 @@ class VerticalLayout(p: Props) : RComponent<Props, RState>(p) {
                 }
             +props.css
         }
-        attrs.onClickFunction = {props.onClick()}
+        attrs.onClickFunction = { props.onClick() }
         props.children()
     }
 }
 
-fun RBuilder.verticalLayout(handler: RHandler<Props>) = child(VerticalLayout::class.js, Props, handler)
+fun RBuilder.verticalLayout(handler: RHandler<Props>) = child(VerticalLayout::class.js, Props) {
+    attrs.css = {}
+    handler()
+}
+
 fun RBuilder.verticalCenteredLayout(handler: RHandler<Props>) = child(VerticalLayout::class.js, Props) {
     attrs.isCentered = true
     handler()
