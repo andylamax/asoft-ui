@@ -11,6 +11,7 @@ import react.RState
 @JsName("default")
 external class ReactEcharts : Component<Props, RState> {
     interface Props : RProps {
+        var style: dynamic
         var option: Option
         var notMerge: Boolean?
         var lazyUpdate: Boolean?

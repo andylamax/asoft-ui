@@ -83,7 +83,9 @@ external interface Alignment {
 
 external interface Normal : Showable
 
-external interface Emphasis : Showable
+external interface Emphasis : Showable {
+    var textStyle : dynamic
+}
 
 external interface Showable {
     var position: String

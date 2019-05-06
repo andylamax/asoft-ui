@@ -1,6 +1,9 @@
 package com.asofttz.ui.react.tools
 
+import kotlinext.js.jsObject
+import kotlinx.html.InputType
 import org.w3c.dom.Element
+import react.RBuilder
 import kotlin.browser.document
 
 object View {
@@ -14,4 +17,18 @@ object View {
     }
 
     fun <T : Element> byId(id: String): T? = document.getElementById(id).unsafeCast<T?>()
+}
+
+external interface FormTextInput {
+    var name: String
+    var type: InputType
+    var hint: String
+    var required: Boolean
+    var value: String
+}
+
+fun field(builder: FormTextInput.() -> Unit) = jsObject<FormTextInput> {
+    required = true
+    type = InputType.text
+    builder()
 }

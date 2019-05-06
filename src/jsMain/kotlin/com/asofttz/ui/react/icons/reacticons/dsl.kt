@@ -14,16 +14,13 @@ external interface IconProps : RProps {
 
 // from react-icons
 private fun reactIcon(name: String): RClass<IconProps> {
-    val log = console.asDynamic().log
-    console.asDynamic().log = { p: Any -> }
     var wantedIcon = try {
-        val prov = name.split("/")[0]
+        val prov = name.split("/")[0].toLowerCase()
         val i = name.split("/")[1]
         require("react-icons/$prov")[i]
     } catch (c: Throwable) {
         require("react-icons/fa")["FaSyncAlt"]
     }
-    console.asDynamic().log = log
     if (wantedIcon == undefined) {
         wantedIcon = require("react-icons/fa")["FaSyncAlt"]
     }

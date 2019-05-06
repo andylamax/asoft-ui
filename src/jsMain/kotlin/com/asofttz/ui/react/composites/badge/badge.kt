@@ -76,6 +76,7 @@ class BadgeUI(p: Props) : RComponent<Props, RState>(p) {
             padding(horizontal = 1.em)
             marginBottom = 1.em
             justifyContent = JustifyContent.spaceBetween
+            alignItems = Align.center
             backgroundColor = Color("#${(5263440..16777215).random().toString(16)}").withAlpha((2..7).random().toDouble() / 10)
             cursor = Cursor.pointer
             border = "solid 1px transparent"

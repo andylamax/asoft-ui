@@ -7,6 +7,7 @@ repositories {
     maven { url 'https://dl.bintray.com/kotlinx/kotlinx' }
     maven { url "https://kotlin.bintray.com/kotlinx" }
     maven { url 'https://dl.bintray.com/kotlinx' }
+    maven { url "https://jitpack.io" }
     jcenter()
     mavenCentral()
 }
@@ -40,7 +41,7 @@ kotlin {
         commonMain {
             dependencies {
                 implementation kotlin('stdlib-common')
-                implementation project(":asoft-theme")
+                implementation "com.github.andylamax:asoft-theme:1.0.0"
             }
         }
         commonTest {
@@ -52,7 +53,6 @@ kotlin {
         jvmMain {
             dependencies {
                 implementation kotlin('stdlib-jdk8')
-                implementation project(":asoft-theme")
             }
         }
         jvmTest {
@@ -64,7 +64,6 @@ kotlin {
         jsMain {
             dependencies {
                 implementation kotlin('stdlib-js')
-                implementation project(":asoft-theme")
 
                 implementation "org.jetbrains:kotlin-react:16.6.0-pre.66-kotlin-1.3.11"
                 implementation "org.jetbrains:kotlin-react-dom:16.6.0-pre.66-kotlin-1.3.11"
