@@ -13,3 +13,5 @@ fun CSSBuilder.onDesktop(builder: CSSBuilder.() -> Unit) = media("only screen an
 
 
 val isDesktop get() = window.screen.availWidth > window.screen.availHeight
+
+val isMobile get() = isDesktop.not()

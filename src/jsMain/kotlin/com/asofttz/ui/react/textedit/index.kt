@@ -1,5 +1,5 @@
 @file:JsModule("react-draft-wysiwyg")
-package com.asofttz.ui.react.widget.textedit
+package com.asofttz.ui.react.textedit
 
 import com.asofttz.theme.Theme
 import react.Component

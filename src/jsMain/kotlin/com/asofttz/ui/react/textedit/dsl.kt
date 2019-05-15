@@ -1,12 +1,9 @@
-package com.asofttz.ui.react.widget.textedit
+package com.asofttz.ui.react.textedit
 
 import com.asofttz.theme.Theme
 import kotlinext.js.jsObject
 import kotlinext.js.require
-import kotlinx.css.GridColumn
-import kotlinx.css.em
-import kotlinx.css.padding
-import kotlinx.css.vh
+import kotlinx.css.*
 import react.RBuilder
 import react.RHandler
 import styled.css
@@ -27,8 +24,11 @@ fun RBuilder.textEditor(handler: RHandler<EditorProps>) = styledDiv {
         }
     }
     css {
-        gridColumn = GridColumn("1/4")
+        position = Position.relative
+        width = 100.pct - 2.em
+        margin(horizontal = 1.em)
         border = "solid 2px ${props.theme.primaryColor.main}"
+
         child("div") {
             padding(1.em)
             minHeight = 50.vh
