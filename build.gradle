@@ -78,3 +78,20 @@ kotlin {
         }
     }
 }
+
+/**
+ * npm dependencies
+  
+          dependency('react-responsive-carousel', '3.1.47')
+          dependency('react-event-timeline', '1.5.4')
+ 
+          dependency("echarts", "4.2.1")
+          dependency("echarts-for-react", "2.0.14")
+ 
+          dependency("react-tabs", "3.0.0")
+          dependency("react-table", "6.9.2")
+          dependency("react-draft-wysiwyg", "1.13.2")
+          dependency("draft-js", "0.10.5")
+          dependency("react-icons", "3.5.0")
+ *         
+ */
