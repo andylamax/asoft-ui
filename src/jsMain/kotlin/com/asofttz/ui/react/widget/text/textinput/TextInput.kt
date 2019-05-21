@@ -25,10 +25,6 @@ class TextInput(p: Props) : RComponent<Props, State>(p) {
         var type = InputType.text
         var label = ""
         var name = ""
-            set(value) {
-                label = value
-                field = value
-            }
         var onChange = { _: String -> }
         var onBlur = {}
         var isRequired = true
@@ -64,10 +60,12 @@ class TextInput(p: Props) : RComponent<Props, State>(p) {
         styledInput(type = props.type) {
             attrs {
                 id = View.getId()
+                name = props.name
+
                 if (state.isFocused) {
                     placeholder = props.hint
                 }
-                name = props.name
+
                 required = props.isRequired
 
                 onChangeFunction = {
