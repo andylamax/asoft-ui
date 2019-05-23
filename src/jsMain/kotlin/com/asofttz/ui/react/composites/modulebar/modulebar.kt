@@ -9,6 +9,9 @@ import react.*
 import styled.css
 import styled.styledDiv
 import com.asofttz.ui.react.composites.modulebar.ModuleBar.Props
+import com.asofttz.ui.react.tools.onDesktop
+import com.asofttz.ui.react.tools.onMobile
+import com.asofttz.ui.react.widget.text.searchbar.searchBox
 import com.asofttz.ui.react.widget.text.textinput.textInput
 
 class ModuleBar(p: Props) : RComponent<Props, RState>(p) {
@@ -16,6 +19,7 @@ class ModuleBar(p: Props) : RComponent<Props, RState>(p) {
         var theme = Theme()
         var searchHint = "Type to search"
         var onSearch = { _: String -> }
+        var css: CSSBuilder.() -> Unit = {}
     }
 
     override fun RBuilder.render(): dynamic = styledDiv {
@@ -29,15 +33,27 @@ class ModuleBar(p: Props) : RComponent<Props, RState>(p) {
             width = 100.pct + 1.em
             display = Display.flex
             justifyContent = JustifyContent.spaceBetween
+            onMobile {
+                flexWrap = FlexWrap.wrap
+            }
+            alignItems = Align.center
             backgroundColor = props.theme.backgroundColor.light()
             color = props.theme.text.onBackground.light()
             boxShadow(Color.gray, offsetY = 2.px, blurRadius = 10.px, spreadRadius = 1.px)
+            +props.css
         }
 
         styledDiv {
             css {
                 display = Display.flex
-                justifyContent = JustifyContent.flexStart
+                onDesktop {
+                    justifyContent = JustifyContent.flexStart
+                }
+                onMobile {
+                    width = 100.pct
+                    justifyContent = JustifyContent.spaceBetween
+                }
+                flexWrap = FlexWrap.wrap
                 children {
                     margin(horizontal = 0.5.em)
                 }
@@ -51,16 +67,22 @@ class ModuleBar(p: Props) : RComponent<Props, RState>(p) {
         styledDiv {
             css {
                 display = Display.flex
-                justifyContent = JustifyContent.flexEnd
+                onDesktop {
+                    justifyContent = JustifyContent.flexEnd
+                }
+                onMobile {
+                    width = 100.pct
+                    justifyContent = JustifyContent.center
+                }
             }
-            textInput {
+            searchBox {
                 attrs {
                     theme = props.theme
                     hint = props.searchHint
-                    onChange = { key ->
-                        throttle(500L) {
-                            props.onSearch(key)
-                        }
+                }
+                attrs.onSearch = { key ->
+                    throttle(500L) {
+                        props.onSearch(key)
                     }
                 }
             }

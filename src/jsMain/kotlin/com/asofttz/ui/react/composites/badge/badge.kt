@@ -82,7 +82,7 @@ class BadgeUI(p: Props) : RComponent<Props, RState>(p) {
             border = "solid 1px transparent"
             transition(duration = 0.5.s)
             hover {
-                border = "solid 1px black"
+                border = "solid 1px ${props.theme.primaryColor.main}"
             }
             +props.css
             attrs.onClickFunction = { props.onClick() }

@@ -19,7 +19,6 @@ object SearchBarStyles : StyleSheet("asoft-view-search-bar-style") {
             left = 5.pct
             bottom = 0.px
             width = 90.pct
-            backgroundColor = Color.black
         }
 
         hover {
@@ -38,12 +37,14 @@ object SearchBarStyles : StyleSheet("asoft-view-search-bar-style") {
     }
     val input by css {
         transition(duration = 1.s)
+        outline = Outline.none
         position = Position.relative
         backgroundColor = Color.transparent
         minHeight = 1.5.em
         width = 100.pct
         minWidth = 10.em
         border = "none"
+        put("font-size", "inherit")
         textAlign = TextAlign.center
         padding(0.5.em, 0.em)
         color = Color.black
@@ -51,7 +52,7 @@ object SearchBarStyles : StyleSheet("asoft-view-search-bar-style") {
         focus {
             transition(duration = 1.s)
             borderBottomStyle = BorderStyle.solid
-            borderBottomWidth = 2.px
+            borderBottomWidth = 1.px
             borderBottomColor = Color.black
         }
     }

@@ -55,6 +55,7 @@ class Button(p: Props) : RComponent<Props, RState>(p) {
             color = textCol
             padding(0.4.em)
             cursor = Cursor.pointer
+            put("font-size", "inherit")
             +props.css
 
             hover {
@@ -70,9 +71,6 @@ class Button(p: Props) : RComponent<Props, RState>(p) {
         }
 
         attrs.onClickFunction = {
-            if (props.isSubmit) {
-                it.preventDefault()
-            }
             props.onClick()
         }
 

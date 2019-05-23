@@ -57,10 +57,15 @@ class TextInput(p: Props) : RComponent<Props, State>(p) {
         }
 
 
-        styledInput(type = props.type) {
+        styledInput {
             attrs {
                 id = View.getId()
                 name = props.name
+                type = if (props.type == InputType.tel) {
+                    InputType.number
+                } else {
+                    props.type
+                }
 
                 if (state.isFocused) {
                     placeholder = props.hint
@@ -97,4 +102,7 @@ class TextInput(p: Props) : RComponent<Props, State>(p) {
     }
 }
 
-fun RBuilder.textInput(handler: RHandler<Props> = {}) = child(TextInput::class.js, Props, handler)
+fun RBuilder.textInput(handler: RHandler<Props> = {}) = child(TextInput::class.js, Props) {
+    attrs.type = InputType.text
+    handler()
+}

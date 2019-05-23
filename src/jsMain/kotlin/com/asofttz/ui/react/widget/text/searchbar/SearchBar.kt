@@ -1,5 +1,6 @@
 package com.asofttz.ui.react.widget.text.searchbar
 
+import com.asofttz.theme.main
 import com.asofttz.ui.react.tools.ThemedProps
 import com.asofttz.ui.react.widget.text.searchbar.SearchBox.Props
 import kotlinx.css.Color
@@ -24,33 +25,34 @@ class SearchBox(p: Props) : RComponent<Props, RState>(p) {
         var onSearch = { _: String -> }
     }
 
-    override fun RBuilder.render() {
-        styledDiv {
-            css {
-                +SearchBarStyles.root
-                +props.css
+    override fun RBuilder.render(): dynamic = styledDiv {
+        css {
+            +SearchBarStyles.root
+            before {
+                backgroundColor = props.theme.primaryColor.main()
             }
+            +props.css
+        }
 
-            styledInput(type = InputType.text) {
-                attrs {
-                    id = "asoft-view-search-bar"
-                    placeholder = "Search . . ."
-                    onKeyDownFunction = {
-                        val e = it.unsafeCast<KeyboardEvent>()
-                        if (e.keyCode == 13) {
-                            props.onSearch((document.getElementById(id) as HTMLInputElement).value)
-                        }
+        styledInput(type = InputType.text) {
+            attrs {
+                id = "asoft-view-search-bar"
+                placeholder = "Search . . ."
+                onKeyDownFunction = {
+                    val e = it.unsafeCast<KeyboardEvent>()
+                    if (e.keyCode == 13) {
+                        props.onSearch((document.getElementById(id) as HTMLInputElement).value)
                     }
                 }
+            }
 
-                css {
-                    +SearchBarStyles.input
-                    props.theme.let {
-                        color = Color(it.text.onBackground.light)
+            css {
+                +SearchBarStyles.input
+                props.theme.let {
+                    color = Color(it.text.onBackground.light)
 
-                        focus {
-                            borderBottomColor = Color(it.primaryColor.dark)
-                        }
+                    focus {
+                        borderBottomColor = it.primaryColor.main()
                     }
                 }
             }
