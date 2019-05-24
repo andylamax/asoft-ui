@@ -13,30 +13,32 @@ import kotlinx.html.js.onChangeFunction
 import kotlinx.html.js.onFocusFunction
 import org.w3c.dom.HTMLInputElement
 import react.*
+import react.dom.defaultValue
 import styled.css
 import styled.styledDiv
 import styled.styledInput
 import kotlin.browser.document
 
-class TextInput(p: Props) : RComponent<Props, State>(p) {
+class TextInput(props: Props) : RComponent<Props, State>(props) {
 
     object Props : ThemedProps() {
         var hint = ""
         var type = InputType.text
         var label = ""
         var name = ""
+        var value = ""
         var onChange = { _: String -> }
         var onBlur = {}
         var isRequired = true
     }
 
-    class State : RState {
+    class State(props: Props) : RState {
         var textValue = ""
-        var isFocused = false
+        var isFocused = props.value.isNotBlank()
     }
 
     init {
-        state = State()
+        state = State(props)
     }
 
     override fun RBuilder.render(): dynamic = styledDiv {
@@ -61,6 +63,7 @@ class TextInput(p: Props) : RComponent<Props, State>(p) {
             attrs {
                 id = View.getId()
                 name = props.name
+                defaultValue = props.value
                 type = if (props.type == InputType.tel) {
                     InputType.number
                 } else {

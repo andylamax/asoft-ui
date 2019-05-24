@@ -5,12 +5,18 @@ import kotlinext.js.jsObject
 import kotlinext.js.require
 import react.RBuilder
 import react.RHandler
+import react.ReactElement
+import react.buildElement
 import kotlin.browser.window
 
 private var isReactTableCssLoaded = false
 fun <D : Any> Column<D>.access(trans: (D) -> String) {
     id = "$Header-id"
     accessor = trans
+}
+
+fun <D : Any> Column<D>.render(builder: RBuilder.(D) -> ReactElement) {
+    Cell = { row -> buildElement { builder(row.original) } }
 }
 
 val tableWidth = (window.screen.availWidth * if (isDesktop) 0.8 else 1.0) * 0.99
