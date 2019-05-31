@@ -9,6 +9,7 @@ import kotlinx.css.properties.border
 import kotlinx.html.ButtonType
 import kotlinx.html.InputType
 import kotlinx.html.js.onClickFunction
+import kotlinx.html.js.onMouseDownFunction
 import react.RBuilder
 import react.RComponent
 import react.RHandler
@@ -22,6 +23,7 @@ class Button(p: Props) : RComponent<Props, RState>(p) {
         var type = Type.Primary
         var text = ""
         var isSubmit = false
+        var onMouseDown = {}
     }
 
     enum class Type {
@@ -70,9 +72,9 @@ class Button(p: Props) : RComponent<Props, RState>(p) {
             attrs.type = ButtonType.submit
         }
 
-        attrs.onClickFunction = {
-            props.onClick()
-        }
+        attrs.onClickFunction = { props.onClick() }
+
+        attrs.onMouseDownFunction = { props.onMouseDown() }
 
         +props.text
     }
