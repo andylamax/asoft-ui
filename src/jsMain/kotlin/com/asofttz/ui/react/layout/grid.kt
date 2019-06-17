@@ -1,6 +1,9 @@
 package com.asofttz.ui.react.layout
 
+import com.asofttz.ui.react.tools.IStyled
 import com.asofttz.ui.react.tools.StyledProps
+import kotlinext.js.jsObject
+import kotlinx.css.CSSBuilder
 import kotlinx.css.Display
 import kotlinx.css.GridTemplateAreas
 import kotlinx.css.pct
@@ -11,9 +14,9 @@ import styled.styledDiv
 import styled.styledSection
 
 class GridLayout(p: Props) : RComponent<GridLayout.Props, RState>(p) {
-    object Props : StyledProps() {
-        var grids = "1fr"
-        var gap = "1em"
+    interface Props : IStyled {
+        var grids: String
+        var gap: String
     }
 
     override fun RBuilder.render(): dynamic = styledSection {
@@ -23,20 +26,20 @@ class GridLayout(p: Props) : RComponent<GridLayout.Props, RState>(p) {
             width = 100.pct
             +props.css
         }
-        attrs.onClickFunction = {props.onClick()}
         props.children()
     }
 }
 
-fun RBuilder.gridLayout(grids: String, gap: String = "1em", handler: RHandler<GridLayout.Props>) = child(GridLayout::class.js, GridLayout.Props) {
+fun RBuilder.gridLayout(grids: String, gap: String = "1em", handler: RHandler<GridLayout.Props>) = child(GridLayout::class.js, jsObject<GridLayout.Props> {}) {
     attrs.grids = grids
     attrs.gap = gap
+    attrs.css = {}
     handler()
 }
 
 class GridCell(p: GridCell.Props) : RComponent<GridCell.Props, RState>(p) {
-    object Props : StyledProps() {
-        var area = ""
+    interface Props : IStyled {
+        var area: String
     }
 
     override fun RBuilder.render(): dynamic = styledDiv {
@@ -50,7 +53,7 @@ class GridCell(p: GridCell.Props) : RComponent<GridCell.Props, RState>(p) {
     }
 }
 
-fun GridBuilder.cell(area: String, handler: RHandler<GridCell.Props>) = child(GridCell::class.js, GridCell.Props) {
+fun GridBuilder.cell(area: String, handler: RHandler<GridCell.Props>) = child(GridCell::class.js, jsObject<GridCell.Props> {}) {
     attrs.area = area
     handler()
 }

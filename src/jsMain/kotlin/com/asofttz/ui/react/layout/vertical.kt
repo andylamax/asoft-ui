@@ -1,12 +1,9 @@
 package com.asofttz.ui.react.layout
 
 import com.asofttz.ui.react.layout.VerticalLayout.Props
-import com.asofttz.ui.react.tools.StyledProps
-import kotlinx.css.Align
-import kotlinx.css.Display
-import kotlinx.css.FlexDirection
-import kotlinx.css.pct
-import kotlinx.html.js.onClickFunction
+import com.asofttz.ui.react.tools.IStyled
+import kotlinext.js.jsObject
+import kotlinx.css.*
 import react.RBuilder
 import react.RComponent
 import react.RHandler
@@ -15,8 +12,8 @@ import styled.css
 import styled.styledDiv
 
 class VerticalLayout(p: Props) : RComponent<Props, RState>(p) {
-    object Props : StyledProps() {
-        var isCentered = false
+    interface Props : IStyled {
+        var isCentered: Boolean
     }
 
     override fun RBuilder.render(): dynamic = styledDiv {
@@ -33,17 +30,22 @@ class VerticalLayout(p: Props) : RComponent<Props, RState>(p) {
                 }
             +props.css
         }
-        attrs.onClickFunction = { props.onClick() }
         props.children()
     }
 }
 
-fun RBuilder.verticalLayout(handler: RHandler<Props>) = child(VerticalLayout::class.js, Props) {
-    attrs.css = {}
+fun RBuilder.verticalLayout(handler: RHandler<Props>) = child(VerticalLayout::class.js, jsObject<Props> {}) {
+    attrs {
+        css = {}
+        isCentered = false
+    }
     handler()
 }
 
-fun RBuilder.verticalCenteredLayout(handler: RHandler<Props>) = child(VerticalLayout::class.js, Props) {
-    attrs.isCentered = true
+fun RBuilder.verticalCenteredLayout(handler: RHandler<Props>) = child(VerticalLayout::class.js, jsObject<Props> { }) {
+    attrs {
+        css = {}
+        attrs.isCentered = true
+    }
     handler()
 }

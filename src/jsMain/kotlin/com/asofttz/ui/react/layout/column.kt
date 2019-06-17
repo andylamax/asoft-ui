@@ -1,12 +1,12 @@
 package com.asofttz.ui.react.layout
 
 import com.asofttz.ui.react.layout.ColumnLayout.Props
-import com.asofttz.ui.react.tools.StyledProps
+import com.asofttz.ui.react.tools.IStyled
+import kotlinext.js.jsObject
 import kotlinx.css.Display
 import kotlinx.css.Gap
 import kotlinx.css.GridTemplateColumns
 import kotlinx.css.pct
-import kotlinx.html.js.onClickFunction
 import react.RBuilder
 import react.RComponent
 import react.RHandler
@@ -15,9 +15,9 @@ import styled.css
 import styled.styledDiv
 
 class ColumnLayout(p: Props) : RComponent<Props, RState>(p) {
-    object Props : StyledProps() {
-        var columns = "1fr"
-        var gap = "1em"
+    interface Props : IStyled {
+        var columns: String
+        var gap: String
     }
 
     override fun RBuilder.render(): dynamic = styledDiv {
@@ -29,13 +29,13 @@ class ColumnLayout(p: Props) : RComponent<Props, RState>(p) {
             height = 100.pct
             +props.css
         }
-        attrs.onClickFunction = {props.onClick()}
         props.children()
     }
 }
 
-fun RBuilder.columnLayout(columns: String = "1fr", gap: String = "1em", handler: RHandler<Props>) = child(ColumnLayout::class.js, Props) {
+fun RBuilder.columnLayout(columns: String = "1fr", gap: String = "1em", handler: RHandler<Props>) = child(ColumnLayout::class.js, jsObject<Props> { }) {
     attrs.columns = columns
     attrs.gap = gap
+    attrs.css = {}
     handler()
 }

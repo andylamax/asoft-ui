@@ -19,3 +19,13 @@ fun <P : StyledProps> RElementBuilder<P>.css(builder: CSSBuilder.() -> Unit) {
 abstract class ThemedProps : StyledProps() {
     var theme = Theme()
 }
+
+interface IStyled : RProps {
+    var css: CSSBuilder.() -> Unit
+}
+
+fun <P : IStyled> RElementBuilder<P>.css(builder: CSSBuilder.() -> Unit) {
+    attrs.css = {
+        builder()
+    }
+}

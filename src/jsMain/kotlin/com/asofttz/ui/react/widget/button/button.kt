@@ -2,8 +2,12 @@ package com.asofttz.ui.react.widget.button
 
 import com.asofttz.theme.dark
 import com.asofttz.theme.main
+import com.asofttz.tools.assign
+import com.asofttz.tools.newJsObject
 import com.asofttz.ui.react.tools.ThemedProps
 import com.asofttz.ui.react.widget.button.Button.Props
+import kotlinext.js.Object
+import kotlinext.js.js
 import kotlinx.css.*
 import kotlinx.css.properties.border
 import kotlinx.html.ButtonType
@@ -84,14 +88,14 @@ fun RBuilder.button(
         text: String = "P Button",
         type: Button.Type = Button.Type.Primary,
         handler: RHandler<Props> = {}
-) = child(Button::class.js, Props) {
+) = child(Button::class.js, Props.newJsObject()) {
     attrs.text = text
     attrs.type = type
     handler()
 }
 
 fun RBuilder.primaryButton(text: String = "P Button", handler: RHandler<Props> = {}) =
-        button(text, Button.Type.Primary, handler = handler)
+        button(text, Button.Type.Primary, handler)
 
 fun RBuilder.normalButton(text: String = "N Button", handler: RHandler<Props> = {}) =
         button(text, Button.Type.Normal, handler)

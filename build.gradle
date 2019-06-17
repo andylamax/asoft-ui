@@ -90,10 +90,8 @@ kotlin {
 
  dependency("react-tabs", "3.0.0")
  dependency("react-table", "6.9.2")
-
- dependency("leaflet","1.5.1")
- dependency("react-leaflet","2.4.0")
- dependency("react-leaflet-polyline","1.0.3")
+ 
+ dependency("@react-google-maps/api","1.3.0")
 
  dependency("react-draft-wysiwyg", "1.13.2")
  dependency("draft-js", "0.10.5")
