@@ -76,7 +76,12 @@ class Button(p: Props) : RComponent<Props, RState>(p) {
             attrs.type = ButtonType.submit
         }
 
-        attrs.onClickFunction = { props.onClick() }
+        attrs.onClickFunction = {
+            if (!props.isSubmit) {
+                it.preventDefault()
+            }
+            props.onClick()
+        }
 
         attrs.onMouseDownFunction = { props.onMouseDown() }
 

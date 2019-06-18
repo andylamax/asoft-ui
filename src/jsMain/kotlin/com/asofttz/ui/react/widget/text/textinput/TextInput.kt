@@ -1,5 +1,6 @@
 package com.asofttz.ui.react.widget.text.textinput
 
+import com.asofttz.tools.newJsObject
 import com.asofttz.ui.react.tools.ThemedProps
 import com.asofttz.ui.react.tools.View
 import com.asofttz.ui.react.widget.text.textinput.TextInput.Props
@@ -105,7 +106,7 @@ class TextInput(props: Props) : RComponent<Props, State>(props) {
     }
 }
 
-fun RBuilder.textInput(handler: RHandler<Props> = {}) = child(TextInput::class.js, Props) {
+fun RBuilder.textInput(handler: RHandler<Props> = {}) = child(TextInput::class.js, Props.newJsObject()) {
     attrs.type = InputType.text
     handler()
 }

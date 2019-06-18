@@ -21,7 +21,6 @@ class VerticalLayout(p: Props) : RComponent<Props, RState>(p) {
             display = Display.flex
             flexDirection = FlexDirection.column
             width = 100.pct
-            height = 100.pct
             if (props.isCentered) {
                 alignItems = Align.center
             } else

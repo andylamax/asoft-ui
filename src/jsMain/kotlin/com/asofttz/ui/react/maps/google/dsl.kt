@@ -60,3 +60,8 @@ fun RBuilder.map(handler: RHandler<GoogleMap.Props> = {}) = loadScript {
         handler()
     }
 }
+
+fun Array<Double>.toLatLng() = jsObject<LatLng> {
+    lat = get(0)
+    lng = get(1)
+}

@@ -1,5 +1,6 @@
 package com.asofttz.ui.react.widget.checkbox
 
+import com.asofttz.tools.newJsObject
 import com.asofttz.ui.react.tools.ThemedProps
 import com.asofttz.ui.react.widget.checkbox.CheckBox.Props
 import com.asofttz.ui.react.widget.checkbox.CheckBox.State
@@ -98,7 +99,7 @@ class CheckBox(p: Props) : RComponent<Props, State>(p) {
     }
 }
 
-fun RBuilder.checkbox(label: String = "", handler: RHandler<Props> = {}) = child(CheckBox::class.js, Props) {
+fun RBuilder.checkbox(label: String = "", handler: RHandler<Props> = {}) = child(CheckBox::class.js, Props.newJsObject()) {
     attrs.label = label
     handler()
 }

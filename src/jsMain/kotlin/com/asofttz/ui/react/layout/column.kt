@@ -26,7 +26,6 @@ class ColumnLayout(p: Props) : RComponent<Props, RState>(p) {
             gridTemplateColumns = GridTemplateColumns(props.columns)
             gap = Gap(props.gap)
             width = 100.pct
-            height = 100.pct
             +props.css
         }
         props.children()

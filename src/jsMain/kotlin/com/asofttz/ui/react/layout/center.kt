@@ -20,11 +20,12 @@ class CenterLayout(p: Props) : RComponent<Props, RState>(p) {
             justifyContent = JustifyContent.center
             alignItems = Align.center
             width = 100.pct
-            height = 100.pct
             +props.css
         }
         props.children()
     }
 }
 
-fun RBuilder.centerLayout(handler: RHandler<Props>) = child(CenterLayout::class.js, jsObject {  }, handler)
+fun RBuilder.centerLayout(handler: RHandler<Props>) = child(CenterLayout::class.js, jsObject {
+    css = {}
+}, handler)

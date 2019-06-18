@@ -20,6 +20,7 @@ fun <D : Any> Column<D>.render(builder: RBuilder.(D) -> ReactElement) {
 }
 
 val tableWidth = (window.screen.availWidth * if (isDesktop) 0.8 else 1.0) * 0.99
+
 fun <D : Any> RBuilder.reactTable(
         data: Array<D> = arrayOf(),
         columns: Array<Column<D>> = arrayOf(),
@@ -29,7 +30,7 @@ fun <D : Any> RBuilder.reactTable(
         require("react-table/react-table.css")
         isReactTableCssLoaded = true
     }
-    attrs.defaultPageSize = 50
+    attrs.defaultPageSize = 15
     attrs.data = data
     attrs.columns = columns
     handler()

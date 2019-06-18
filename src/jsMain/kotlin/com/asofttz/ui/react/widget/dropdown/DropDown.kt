@@ -1,6 +1,7 @@
 package com.asofttz.ui.react.widget.dropdown
 
 import com.asofttz.theme.main
+import com.asofttz.tools.newJsObject
 import com.asofttz.ui.react.tools.ThemedProps
 import com.asofttz.ui.react.tools.value
 import com.asofttz.ui.react.widget.dropdown.DropDownComponent.Props
@@ -95,4 +96,4 @@ class DropDownComponent(p: Props) : RComponent<Props, State>(p) {
     }
 }
 
-fun RBuilder.dropDown(handler: RHandler<Props>) = child(DropDownComponent::class.js, Props, handler)
+fun RBuilder.dropDown(handler: RHandler<Props>) = child(DropDownComponent::class.js, Props.newJsObject(), handler)

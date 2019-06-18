@@ -13,6 +13,8 @@ object TextInputStyles : StyleSheet("asoft-view-text-input-styles") {
         backgroundColor = Color.transparent
         width = 100.pct
         border = "none"
+        marginTop = 1.em
+        marginBottom = 1.em
 
         before {
             transition(duration = .2.s)
