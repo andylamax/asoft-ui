@@ -19,6 +19,8 @@ fun <D : Any> Column<D>.render(builder: RBuilder.(D) -> ReactElement) {
     Cell = { row -> buildElement { builder(row.original) } }
 }
 
+fun <D : Any> col(builder: Column<D>.() -> Unit) = jsObject<Column<D>> { }.apply(builder)
+
 val tableWidth = (window.screen.availWidth * if (isDesktop) 0.8 else 1.0) * 0.99
 
 fun <D : Any> RBuilder.reactTable(

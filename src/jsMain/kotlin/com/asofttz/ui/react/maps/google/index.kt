@@ -2,7 +2,6 @@
 
 package com.asofttz.ui.react.maps.google
 
-import kotlinx.html.RP
 import react.Component
 import react.RProps
 import react.RState
