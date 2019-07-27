@@ -2,7 +2,7 @@ package tz.co.asoft.ui.react.tools
 
 import org.w3c.dom.HTMLFormElement
 
-inline operator fun HTMLFormElement.get(name: String): String? {
+operator fun HTMLFormElement.get(name: String): String? {
     val node = asDynamic()[name]
     return if (node == undefined) {
         null

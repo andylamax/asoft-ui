@@ -19,6 +19,7 @@ import styled.styledSection
 import tz.co.asoft.ui.module.Module
 import tz.co.asoft.ui.module.ModuleProps
 import tz.co.asoft.ui.module.ScopedRComponent
+import tz.co.asoft.ui.react.icons.reacticons.faBars
 import tz.co.asoft.ui.react.tools.onDesktop
 import tz.co.asoft.ui.react.tools.onMobile
 import kotlin.browser.document
@@ -80,10 +81,8 @@ class Application : ScopedRComponent<Props, State>() {
                         }
                         height = 1.em
                         width = 1.5.em
-                        val c1 = props.theme.text.onPrimary.main
-                        val c2 = props.theme.primaryColor.main
-                        background = "linear-gradient(0deg,$c1,$c1,transparent,$c2,transparent,$c1,transparent,$c2,transparent,$c1,$c1)"
                     }
+                    faBars{}
                     attrs.onClickFunction = {
                         props.onDrawerOpen()
                     }
@@ -118,6 +117,9 @@ class Application : ScopedRComponent<Props, State>() {
                     css {
                         marginRight = 0.5.em
                         fontSize = 1.em
+                        onMobile {
+                            display = Display.none
+                        }
                     }
                     +props.user.name
                 }
@@ -126,9 +128,15 @@ class Application : ScopedRComponent<Props, State>() {
                     css {
                         backgroundColor = props.theme.text.onPrimary.main()
                         borderRadius = 50.pct
-                        height = 1.5.em
-                        width = 1.5.em
                         cursor = Cursor.pointer
+                        onMobile {
+                            height = 2.8.em
+                            width = 2.8.em
+                        }
+                        onDesktop {
+                            height = 1.5.em
+                            width = 1.5.em
+                        }
                     }
 
                     attrs.onClickFunction = {

@@ -54,7 +54,7 @@ class FrameworkComponent(p: Props) : RComponent<Props, State>(p) {
         props.onSignOut()
     }
 
-    private fun login(it: User) = setState {
+    private fun login() = setState {
         history?.push("/dashboard/")
     }
 
@@ -166,9 +166,9 @@ class FrameworkComponent(p: Props) : RComponent<Props, State>(p) {
         attrs.theme = state.theme
         attrs.footer = props.footer
         attrs.pages = props.pages
-        attrs.onLogin = { user, prop ->
+        attrs.onLogin = { _, prop ->
             history = prop!!.history
-            login(user)
+            login()
         }
         attrs.onRouteResultHistory = {
             history = it

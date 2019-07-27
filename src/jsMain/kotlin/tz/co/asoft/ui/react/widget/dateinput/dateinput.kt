@@ -26,10 +26,6 @@ class DateInput(p: Props) : RComponent<Props, State>(p) {
         var type = InputType.date
         var label = ""
         var name = ""
-            set(value) {
-                label = value
-                field = value
-            }
         var onChange = { _: Date -> }
         var onBlur = {}
         var isRequired = true

@@ -10,6 +10,8 @@ import styled.css
 import styled.styledDiv
 import tz.co.asoft.ui.module.Module
 import tz.co.asoft.ui.module.ModuleProps
+import tz.co.asoft.ui.react.tools.onDesktop
+import tz.co.asoft.ui.react.tools.onMobile
 
 object SettingsModule : Module() {
     override val name = "Settings"
@@ -42,9 +44,15 @@ private val Appearance = { props: RouteResultProps<ModuleProps> ->
                 styledDiv {
                     css {
                         marginTop = 1.em
-                        display = Display.flex
-                        justifyContent = JustifyContent.stretch
+                        display = Display.grid
+                        gap = Gap("1em")
                         width = 100.pct
+                        onDesktop {
+                            gridTemplateColumns = GridTemplateColumns("1fr 1fr 1fr 1fr")
+                        }
+                        onMobile {
+                            gridTemplateColumns = GridTemplateColumns("1fr")
+                        }
                     }
                     themes.forEach {
                         styledDiv {

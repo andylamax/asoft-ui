@@ -10,4 +10,24 @@ external val faSyncAlt: RClass<IconProps>
 @JsName("FaArrowLeft")
 external val faArrowLeft: RClass<IconProps>
 
+@JsName("FaBars")
+external val faBars: RClass<IconProps>
+
+@JsName("FaUserAlt")
+external val faUserAlt: RClass<IconProps>
+
+@JsName("FaBriefcase")
+external val faBriefcase: RClass<IconProps>
+
+@JsName("FaUsers")
+external val faUsers : RClass<IconProps>
+
+@JsName("FaUniversity")
+external val faUnivertsity : RClass<IconProps>
+
+@JsName("FaUserFriends")
+external val faUserFriends : RClass<IconProps>
+
+@JsName("FaHandHoldingUsd")
+external val faHandHoldingUsd : RClass<IconProps>
 

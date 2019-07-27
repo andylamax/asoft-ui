@@ -32,7 +32,7 @@ fun RBuilder.gridLayout(grids: String, gap: String = "1em", handler: RHandler<Gr
     handler()
 }
 
-class GridCell(p: GridCell.Props) : RComponent<GridCell.Props, RState>(p) {
+class GridCell(p: Props) : RComponent<GridCell.Props, RState>(p) {
     interface Props : IStyled {
         var area: String
     }
@@ -50,6 +50,7 @@ class GridCell(p: GridCell.Props) : RComponent<GridCell.Props, RState>(p) {
 
 fun GridBuilder.cell(area: String, handler: RHandler<GridCell.Props>) = child(GridCell::class.js, jsObject<GridCell.Props> {}) {
     attrs.area = area
+    attrs.css = {}
     handler()
 }
 

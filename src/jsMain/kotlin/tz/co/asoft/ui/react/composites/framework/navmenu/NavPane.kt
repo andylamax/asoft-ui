@@ -14,6 +14,7 @@ import styled.styledDiv
 import styled.styledSection
 import tz.co.asoft.ui.module.Module
 import tz.co.asoft.ui.module.ModuleProps
+import tz.co.asoft.ui.react.icons.reacticons.mdClose
 import tz.co.asoft.ui.react.tools.onDesktop
 import tz.co.asoft.ui.react.tools.onMobile
 
@@ -56,7 +57,7 @@ class NavPane : RComponent<Props, State>() {
             attrs.onClickFunction = {
                 props.onCloseDrawer()
             }
-            +"X"
+            mdClose {}
         }
     }
 
@@ -104,7 +105,7 @@ class NavPane : RComponent<Props, State>() {
     override fun RBuilder.render(): dynamic = styledSection {
         css {
             width = 100.pct
-            height = 100.pct
+            height = 100.vh
             display = Display.flex
             position = Position.relative
             flexDirection = FlexDirection.column

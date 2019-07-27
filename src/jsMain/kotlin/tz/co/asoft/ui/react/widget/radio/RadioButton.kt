@@ -22,7 +22,8 @@ class RadioButton : RComponent<Props, RState>() {
         var name = ""
         var style: dynamic = js { }
         var checked: Boolean? = null
-        var onChange = { value: Boolean -> }
+        var onChange = { _: Boolean -> }
+        var css: CSSBuilder.() -> Unit = {}
         var value = ""
     }
 
@@ -33,6 +34,7 @@ class RadioButton : RComponent<Props, RState>() {
         css {
             display = Display.inlineFlex
             alignItems = Align.center
+            +props.css
         }
         styledInput {
             css {
@@ -65,9 +67,7 @@ class RadioButton : RComponent<Props, RState>() {
                 name = props.name
                 value = props.value
                 onChangeFunction = {
-                    if (props.onChange != undefined) {
-                        props.onChange((it.target as HTMLInputElement).checked)
-                    }
+                    props.onChange((it.target as HTMLInputElement).checked)
                 }
             }
         }
