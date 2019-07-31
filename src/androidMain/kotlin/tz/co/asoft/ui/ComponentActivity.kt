@@ -1,14 +1,14 @@
 package tz.co.asoft.ui
 
+import androidx.appcompat.app.AppCompatActivity
 import androidx.fragment.app.Fragment
-import androidx.fragment.app.FragmentActivity
 import androidx.fragment.app.FragmentManager
 import kotlinx.coroutines.*
 import kotlin.coroutines.CoroutineContext
 
-abstract class ComponentFragmentActivity<T : Any> : FragmentActivity() {
+abstract class ComponentActivity<T : Any> : AppCompatActivity() {
     lateinit var state: T
-    protected inline fun ComponentFragmentActivity<T>.setState(builder: T.() -> Unit) {
+    protected inline fun ComponentActivity<T>.setState(builder: T.() -> Unit) {
         state.apply(builder)
         render()
     }
@@ -56,12 +56,12 @@ abstract class ComponentFragmentActivity<T : Any> : FragmentActivity() {
     }
 }
 
-abstract class ScopedFragmentActivity<S : Any> : ComponentFragmentActivity<S>(), CoroutineScope {
+abstract class ScopedActivity<S : Any> : ComponentActivity<S>(), CoroutineScope {
     protected var job = Job()
     override val coroutineContext: CoroutineContext
         get() = Dispatchers.Main + job
 
-    protected fun ScopedFragmentActivity<S>.syncState(coroutineContext: CoroutineContext = job, builder: suspend S.() -> Unit) {
+    protected fun ScopedActivity<S>.syncState(coroutineContext: CoroutineContext = job, builder: suspend S.() -> Unit) {
         launch(coroutineContext) {
             state.apply {
                 builder()

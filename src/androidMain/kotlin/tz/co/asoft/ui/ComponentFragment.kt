@@ -17,16 +17,18 @@ abstract class ComponentFragment<P : Any, S : Any> : Fragment() {
 
     abstract val layoutId: Int
 
-    protected fun ComponentFragment<P, S>.setState(builder: S.() -> Unit) {
+    protected fun ComponentFragment<*, S>.setState(builder: S.() -> Unit) {
         state.apply(builder)
         render()
     }
 
-    fun ComponentFragment<P, S>.attrs(builder: P.() -> Unit) = props.apply(builder)
+    fun ComponentFragment<P, *>.attrs(builder: P.() -> Unit) = props.apply(builder)
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
         return inflater.inflate(layoutId, container, false)
     }
+
+    fun ComponentFragment<*, *>.alert(msg: Any?) : Job? = context?.alert(msg)
 
     override fun onResume() {
         super.onResume()
@@ -46,7 +48,7 @@ abstract class ScopedFragment<P : Any, S : Any> : ComponentFragment<P, S>(), Cor
     override val coroutineContext: CoroutineContext
         get() = Dispatchers.Main + job
 
-    protected fun ScopedFragment<P, S>.syncState(coroutineContext: CoroutineContext = job, builder: suspend S.() -> Unit) {
+    protected fun ScopedFragment<*, S>.syncState(coroutineContext: CoroutineContext = job, builder: suspend S.() -> Unit) {
         launch(coroutineContext) {
             state.apply {
                 builder()
