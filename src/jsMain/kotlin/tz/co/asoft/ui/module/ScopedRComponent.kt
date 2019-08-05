@@ -72,7 +72,7 @@ inline fun <P : CProps, S : CState, reified T : Component<P, S>> RBuilder.child(
     val p: P = props ?: try {
         T::class.js.asDynamic().Props().unsafeCast<P>()
     } catch (c: Throwable) {
-        jsObject { }
+        CProps().unsafeCast<P>()
     }
     return child(clazz.js, p, handler)
 }
