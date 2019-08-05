@@ -5,12 +5,12 @@ import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.Job
 import kotlinx.coroutines.launch
-import react.RComponent
-import react.RProps
-import react.RState
-import react.setState
+import react.*
+import tz.co.asoft.components.CProps
+import tz.co.asoft.components.CState
 import tz.co.asoft.rx.subscriber.Subscriber
 import kotlin.coroutines.CoroutineContext
+import kotlin.reflect.KClass
 
 abstract class ScopedRComponent<P : RProps, S : RState> : RComponent<P, S>, CoroutineScope {
     private val job = Job()
@@ -25,7 +25,7 @@ abstract class ScopedRComponent<P : RProps, S : RState> : RComponent<P, S>, Coro
         state = jsObject { init(props) }
     }
 
-    fun RComponent<P, S>.syncState(block: suspend S.() -> Unit) {
+    fun syncState(block: suspend S.() -> Unit) {
         launch {
             try {
                 state.block()
@@ -66,4 +66,13 @@ abstract class ObservingComponent<T, P : RProps, S : RState> : ObservingRCompone
     constructor(props: P) : super(props) {
         state = jsObject { init(props) }
     }
+}
+
+inline fun <P : CProps, S : CState, reified T : Component<P, S>> RBuilder.child(clazz: KClass<T>, props: P? = null, noinline handler: RHandler<P>): ReactElement {
+    val p: P = props ?: try {
+        T::class.js.asDynamic().Props().unsafeCast<P>()
+    } catch (c: Throwable) {
+        jsObject { }
+    }
+    return child(clazz.js, p, handler)
 }
