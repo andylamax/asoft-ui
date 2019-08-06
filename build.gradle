@@ -1,8 +1,7 @@
 buildscript {
     ext {
         kotlin_version = "1.3.41"
-        auth_version = "3.0.1"
-        rx_version = "2.0.2"
+        auth_version = "4.0.0"
         coroutines_version = "1.2.2"
 
         androidx_fragment_version = "1.0.0"
@@ -88,6 +87,14 @@ kotlin {
         }
     }
 
+    jvm() {
+        compilations.all {
+            tasks[compileKotlinTaskName].kotlinOptions {
+                jvmTarget = "1.8"
+            }
+        }
+    }
+
     android {
         publishLibraryVariants("release")
     }
@@ -99,16 +106,22 @@ kotlin {
 
                 api "org.jetbrains.kotlinx:kotlinx-coroutines-core-common:$coroutines_version"
                 api "com.github.andylamax.asoft-auth:asoft-auth-metadata:$auth_version"
-                api "com.github.andylamax.asoft-rx:asoft-rx-metadata:$rx_version"
             }
         }
 
+        jvmMain {
+            dependencies {
+                implementation kotlin("stdlib-jdk8")
+                api "org.jetbrains.kotlinx:kotlinx-coroutines-core:$coroutines_version"
+                api "com.github.andylamax.asoft-auth:asoft-auth-jvm:$auth_version"
+            }
+        }
+        
         androidMain {
             dependencies {
                 implementation kotlin("stdlib-jdk8")
                 api "org.jetbrains.kotlinx:kotlinx-coroutines-android:$coroutines_version"
                 api "com.google.code.gson:gson:$gson_version"
-                api "com.github.andylamax.asoft-rx:asoft-rx-jvm:$rx_version"
                 api "com.github.andylamax.asoft-auth:asoft-auth-android:$auth_version"
 
                 api "androidx.fragment:fragment:$androidx_fragment_version"
@@ -122,7 +135,6 @@ kotlin {
                 api "org.jetbrains.kotlinx:kotlinx-coroutines-core-js:$coroutines_version"
 
                 api "com.github.andylamax.asoft-auth:asoft-auth-js:$auth_version"
-                api "com.github.andylamax.asoft-rx:asoft-rx-js:$rx_version"
 
                 api "org.jetbrains:kotlin-react:$kotlin_react_version"
                 api "org.jetbrains:kotlin-react-dom:$kotlin_react_dom_version"
@@ -146,6 +158,4 @@ kotlin {
             }
         }
     }
-}
-dependencies {
 }

@@ -68,9 +68,20 @@ abstract class ObservingComponent<T, P : RProps, S : RState> : ObservingRCompone
     }
 }
 
-inline fun <P : CProps, S : CState, reified T : Component<P, S>> RBuilder.child(clazz: KClass<T>, props: P? = null, noinline handler: RHandler<P>): ReactElement {
+inline fun <P : CProps, reified T : Component<P, *>> RBuilder.child(
+    clazz: KClass<T>,
+    props: P? = null,
+    noinline handler: RHandler<P>
+): ReactElement {
     val p: P = props ?: try {
-        T::class.js.asDynamic().Props().unsafeCast<P>()
+        var newProps = T::class.js.asDynamic().Props.unsafeCast<P>()
+        if (newProps == undefined) {
+            newProps = T::class.js.asDynamic().Props().unsafeCast<P>()
+        }
+        if (newProps == undefined) {
+            throw Throwable("props is not set")
+        }
+        newProps
     } catch (c: Throwable) {
         CProps().unsafeCast<P>()
     }
