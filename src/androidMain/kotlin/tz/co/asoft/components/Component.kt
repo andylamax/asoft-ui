@@ -1,5 +1,7 @@
 package tz.co.asoft.components
 
+import android.os.Bundle
+import android.view.View
 import tz.co.asoft.ui.ComponentFragment
 
 actual abstract class Component<P : CProps, S : CState> actual constructor() : ComponentFragment<P, S>() {
@@ -12,8 +14,8 @@ actual abstract class Component<P : CProps, S : CState> actual constructor() : C
 
     actual open fun onReady() {}
 
-    override fun onResume() {
-        super.onResume()
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        super.onViewCreated(view, savedInstanceState)
         onReady()
     }
 

@@ -2,6 +2,7 @@ package tz.co.asoft.ui
 
 import android.content.Intent
 import android.os.Bundle
+import android.os.PersistableBundle
 import androidx.appcompat.app.AppCompatActivity
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.FragmentManager
@@ -9,6 +10,9 @@ import kotlinx.coroutines.*
 import tz.co.asoft.components.CProps
 import tz.co.asoft.components.CState
 import tz.co.asoft.ui.lifecycle.ResultData
+import tz.co.asoft.ui.tools.SyncStorage
+import tz.co.asoft.ui.tools.fromJson
+import tz.co.asoft.ui.tools.toJson
 import kotlin.coroutines.CoroutineContext
 import kotlin.reflect.KClass
 import tz.co.asoft.ui.ComponentActivity.State as State
@@ -17,6 +21,14 @@ abstract class ComponentActivity<S : State> : AppCompatActivity() {
 
     protected lateinit var state: S
 
+    private val className by lazy { this::class.java.name }
+    private val stateClassName by lazy { state::class.java.name }
+    private val stateClass by lazy { Class.forName(stateClassName) as Class<S> }
+
+    private val storage by lazy {
+        SyncStorage(applicationContext, application.packageName)
+    }
+
     open class State : AState() {
         var resultData: ResultData? = null
     }
@@ -24,37 +36,41 @@ abstract class ComponentActivity<S : State> : AppCompatActivity() {
     open val layoutId = R.layout.fragment_frame
     open val frameId = R.id.frame
 
-    val children = mutableMapOf<KClass<*>, ComponentFragment<*, *>>()
+    protected fun setState(builder: S.() -> Unit) {
+        if (stateIsAltered(builder)) {
+            render()
+        }
+    }
 
-    protected inline fun setState(builder: S.() -> Unit) {
-        state.apply(builder)
-        render()
+    protected fun stateIsAltered(buildState: S.() -> Unit): Boolean {
+        val preState = gson.toJson(state)
+        state.apply(buildState)
+        val postState = gson.toJson(state)
+        return preState != postState
     }
 
     override fun onStart() {
-        children.clear()
+        supportFragmentManager.popBackStackImmediate(null, FragmentManager.POP_BACK_STACK_INCLUSIVE)
+        restoreState()
+        render()
         super.onStart()
+    }
+
+    override fun onCreate(savedInstanceState: Bundle?, persistentState: PersistableBundle?) {
+        super.onCreate(savedInstanceState, persistentState)
+        restoreState()
     }
 
     override fun onRestoreInstanceState(savedInstanceState: Bundle?) {
         super.onRestoreInstanceState(savedInstanceState)
-        savedInstanceState?.let {
-            state = allStates[this::class] as? S ?: restoreStateFrom(it)
-        }
+        restoreState()
     }
 
-    private fun restoreStateFrom(bundle: Bundle): S {
-        val stateClass = bundle.classLoader.loadClass(bundle.getString("state_class")) as Class<S>
-        val stateJson = bundle.getString("state_json")
-        return gson.fromJson(stateJson, stateClass)
+    private fun restoreState() {
+        state = storage.restoreState() ?: stateClass.newStateInstance<AProps, S>()
     }
 
-    override fun onResume() {
-        super.onResume()
-        supportFragmentManager.popBackStackImmediate(null, FragmentManager.POP_BACK_STACK_INCLUSIVE)
-        allFragments.clear()
-        render()
-    }
+    private fun SyncStorage.restoreState(): S? = get(stateClassName)?.fromJson(stateClass)
 
     open fun render(): Any = Unit
 
@@ -63,18 +79,13 @@ abstract class ComponentActivity<S : State> : AppCompatActivity() {
     fun Fragment.show(id: Int = frameId, backStack: String? = null) = showFragment(id, this, backStack)
 
     inline fun <reified P : CProps, reified S : CState, T : ComponentFragment<P, S>> childFragment(clazz: KClass<T>, p: P? = null, handler: T.() -> Unit = {}): T {
-        val frag = allFragments.getOrPut(clazz) { clazz.java.newInstance() } as T
-
-        val props = allProps[clazz] as? P ?: p ?: P::class.java.newPropsInstance()
+        val frag = clazz.java.newInstance() as T
+        val props = p ?: P::class.java.newPropsInstance()
         frag.initProps(props)
         frag.apply(handler)
-        val state = allStates[clazz] as? S ?: S::class.java.newStateInstance(P::class.java, props)
+        val state = S::class.java.newStateInstance(P::class.java, props)
 
         frag.initPropsAndState(props, state)
-        allProps[clazz] = props
-        allStates[clazz] = state
-
-        children[clazz] = frag
         return frag
     }
 
@@ -98,12 +109,12 @@ abstract class ComponentActivity<S : State> : AppCompatActivity() {
         return false
     }
 
+    private fun Bundle.saveState() = putString("state_json", state.toJson())
+
+    private fun SyncStorage.saveState() = set(stateClassName, state.toJson())
+
     override fun onSaveInstanceState(outState: Bundle?) {
-        allStates[this::class] = state
-        outState?.apply {
-            putString("state_class", state::class.java.name)
-            putString("state_json", gson.toJson(state))
-        }
+        storage.saveState()
         super.onSaveInstanceState(outState)
     }
 
@@ -131,11 +142,17 @@ abstract class ScopedActivity<S : State> : ComponentActivity<S>(), CoroutineScop
 
     protected fun syncState(coroutineContext: CoroutineContext = job, builder: suspend S.() -> Unit) {
         launch(coroutineContext) {
-            state.apply {
-                builder()
+            if (stateIsAltered(builder)) {
+                withContext(Dispatchers.Main) { render() }
             }
-            withContext(Dispatchers.Main) { setState { } }
         }
+    }
+
+    protected suspend fun stateIsAltered(buildState: suspend S.() -> Unit): Boolean {
+        val preState = gson.toJson(state)
+        state.apply { buildState() }
+        val postState = gson.toJson(state)
+        return preState != postState
     }
 
     override fun onResume() {

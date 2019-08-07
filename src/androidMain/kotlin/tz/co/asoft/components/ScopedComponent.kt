@@ -4,6 +4,7 @@ import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.Job
 import kotlinx.coroutines.launch
+import tz.co.asoft.ui.gson
 import kotlin.coroutines.CoroutineContext
 
 actual abstract class ScopedComponent<P : CProps, S : CState> : Component<P, S>, CoroutineScope {
@@ -17,9 +18,17 @@ actual abstract class ScopedComponent<P : CProps, S : CState> : Component<P, S>,
 
     protected actual fun syncState(context: CoroutineContext, buildState: suspend S.() -> Unit) {
         launch(context) {
-            state.buildState()
-            setState { }
+            if (stateIsAltered(buildState)) {
+                render()
+            }
         }
+    }
+
+    private suspend fun stateIsAltered(buildState: suspend S.() -> Unit): Boolean {
+        val preState = gson.toJson(state)
+        state.apply { buildState() }
+        val postState = gson.toJson(state)
+        return preState != postState
     }
 
     override fun onDestroy() {
