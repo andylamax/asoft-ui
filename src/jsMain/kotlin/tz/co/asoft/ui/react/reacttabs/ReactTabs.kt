@@ -10,6 +10,7 @@ external interface TabsProps : RProps {
     var selectedIndex: Int
     var onSelect: (Int) -> Unit
 }
+external interface TabListProps : RProps
 
 external class Tabs : Component<TabsProps, RState> {
     override fun render(): dynamic
@@ -19,7 +20,7 @@ external class Tab : Component<RProps, RState> {
     override fun render(): dynamic
 }
 
-external class TabList : Component<RProps, RState> {
+external class TabList : Component<TabListProps, RState> {
     override fun render(): dynamic
 }
 
