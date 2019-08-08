@@ -15,6 +15,7 @@ import react.router.dom.RouteResultProps
 import react.router.dom.route
 import styled.css
 import styled.styledDiv
+import styled.styledImg
 import styled.styledSection
 import tz.co.asoft.ui.module.Module
 import tz.co.asoft.ui.module.ModuleProps
@@ -82,7 +83,7 @@ class Application : ScopedRComponent<Props, State>() {
                         height = 1.em
                         width = 1.5.em
                     }
-                    faBars{}
+                    faBars {}
                     attrs.onClickFunction = {
                         props.onDrawerOpen()
                     }
@@ -136,6 +137,16 @@ class Application : ScopedRComponent<Props, State>() {
                         onDesktop {
                             height = 1.5.em
                             width = 1.5.em
+                        }
+                    }
+
+                    if (props.user.photoUrl.isNotEmpty()) {
+                        styledImg(src = props.user.photoUrl) {
+                            css {
+                                width = 100.pct
+                                height = 100.pct
+                                borderRadius = 50.pct
+                            }
                         }
                     }
 

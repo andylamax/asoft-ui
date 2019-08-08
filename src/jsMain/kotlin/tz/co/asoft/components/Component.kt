@@ -11,8 +11,8 @@ actual abstract class Component<P : CProps, S : CState> : RComponent<P, S> {
     actual val ctx = Any()
 
     actual open fun onReady() {}
+
     override fun componentDidMount() {
-        super.componentDidMount()
         onReady()
     }
 
@@ -24,6 +24,5 @@ actual abstract class Component<P : CProps, S : CState> : RComponent<P, S> {
 
     override fun componentWillUnmount() {
         onDone()
-        super.componentWillUnmount()
     }
 }
