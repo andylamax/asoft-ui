@@ -4,13 +4,16 @@ import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.Job
 import kotlinx.coroutines.launch
+import tz.co.asoft.rx.lifecycle.LifeCycle
+import tz.co.asoft.rx.lifecycle.LiveData
 import kotlin.coroutines.CoroutineContext
 
 actual abstract class ScopedComponent<P : CProps, S : CState> : Component<P, S>, CoroutineScope {
     actual constructor() : super()
     actual constructor(props: P) : super(props)
 
-    protected val job get() = Job()
+    protected actual val lifeCycle = LifeCycle()
+    protected actual val job: Job = Job()
 
     override val coroutineContext: CoroutineContext
         get() = Dispatchers.Default + job
@@ -22,8 +25,16 @@ actual abstract class ScopedComponent<P : CProps, S : CState> : Component<P, S>,
         }
     }
 
+    override fun componentWillMount() {
+        super.componentWillMount()
+        lifeCycle.start()
+    }
+
+    actual fun <T> LiveData<T>.observe(onChange: (T) -> Unit) = observe(lifeCycle, onChange)
+
     override fun componentWillUnmount() {
         job.cancel()
+        lifeCycle.finish()
         super.componentWillUnmount()
     }
 }

@@ -16,6 +16,8 @@ actual abstract class Component<P : CProps, S : CState> : RComponent<P, S> {
         onReady()
     }
 
+    actual open fun onStop() {}
+
     protected actual fun setState(builder: S.() -> Unit) {
         setState(buildState = builder)
     }

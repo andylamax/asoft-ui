@@ -1,22 +1,17 @@
 package tz.co.asoft.components
 
 actual abstract class Component<P : CProps, S : CState> {
-    actual constructor() {
+    actual constructor()
 
-    }
-
-    actual constructor(props: P) {
-
-    }
+    actual constructor(props: P)
 
     actual val ctx: Any = Unit
 
-    actual open fun onReady() {
-    }
+    actual open fun onReady() {}
 
-    protected actual fun setState(builder: S.() -> Unit) {
-    }
+    actual open fun onStop() {}
 
-    actual open fun onDone() {
-    }
+    protected actual fun setState(builder: S.() -> Unit) {}
+
+    actual open fun onDone() {}
 }

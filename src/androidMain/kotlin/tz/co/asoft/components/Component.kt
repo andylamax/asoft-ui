@@ -19,6 +19,10 @@ actual abstract class Component<P : CProps, S : CState> actual constructor() : C
         onReady()
     }
 
+    actual override fun onStop() {
+        super.onStop()
+    }
+
     actual final override fun setState(builder: S.() -> Unit) {
         super.setState(buildState = builder)
     }
