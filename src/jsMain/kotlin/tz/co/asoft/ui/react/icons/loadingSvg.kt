@@ -1,7 +1,8 @@
+@file:JsModule("asoft-ui/loadingSvg")
 package tz.co.asoft.ui.react.icons
 
 import react.RClass
 import react.RProps
-import kotlinext.js.require as require
 
-val loadingSvg: RClass<RProps> = require("./loadingSvg").default
+@JsName("default")
+external val loadingSvg: RClass<RProps>
