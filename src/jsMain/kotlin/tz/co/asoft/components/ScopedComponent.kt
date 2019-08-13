@@ -25,8 +25,8 @@ actual abstract class ScopedComponent<P : CProps, S : CState> : Component<P, S>,
         }
     }
 
-    override fun componentWillMount() {
-        super.componentWillMount()
+    override fun componentDidMount() {
+        super.componentDidMount()
         lifeCycle.start()
     }
 
