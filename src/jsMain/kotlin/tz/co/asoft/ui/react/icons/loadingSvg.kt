@@ -4,4 +4,4 @@ import react.RClass
 import react.RProps
 import kotlinext.js.require as require
 
-val loadingSvg: RClass<RProps> = require("./leadingSvg").default
+val loadingSvg: RClass<RProps> = require("./loadingSvg").default
