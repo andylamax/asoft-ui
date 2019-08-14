@@ -23,6 +23,7 @@ import tz.co.asoft.ui.module.ScopedRComponent
 import tz.co.asoft.ui.react.icons.reacticons.faBars
 import tz.co.asoft.ui.react.tools.onDesktop
 import tz.co.asoft.ui.react.tools.onMobile
+import tz.co.asoft.ui.react.tools.onPaper
 import kotlin.browser.document
 
 class Application : ScopedRComponent<Props, State>() {
@@ -57,6 +58,9 @@ class Application : ScopedRComponent<Props, State>() {
                 height = 2.5.em
                 onMobile {
                     height = 4.em
+                }
+                onPaper {
+                    display = Display.none
                 }
                 width = 100.pct
                 backgroundColor = Color(props.theme.primaryColor.main)
@@ -198,6 +202,9 @@ class Application : ScopedRComponent<Props, State>() {
             width = 100.pct
             overflowX = Overflow.hidden
             overflowY = Overflow.scroll
+            onPaper {
+                height = LinearDimension.auto
+            }
         }
 
         props.modules.forEach {

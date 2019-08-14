@@ -11,6 +11,8 @@ import styled.styledDiv
 import tz.co.asoft.ui.react.composites.modulebar.ModuleBar.Props
 import tz.co.asoft.ui.react.tools.onDesktop
 import tz.co.asoft.ui.react.tools.onMobile
+import tz.co.asoft.ui.react.tools.onPaper
+import tz.co.asoft.ui.react.widget.text.searchbar.search
 import tz.co.asoft.ui.react.widget.text.searchbar.searchBox
 
 class ModuleBar(p: Props) : RComponent<Props, RState>(p) {
@@ -34,6 +36,9 @@ class ModuleBar(p: Props) : RComponent<Props, RState>(p) {
             justifyContent = JustifyContent.spaceBetween
             onMobile {
                 flexWrap = FlexWrap.wrap
+            }
+            onPaper {
+                display = Display.none
             }
             alignItems = Align.center
             backgroundColor = props.theme.backgroundColor.light()
@@ -66,6 +71,7 @@ class ModuleBar(p: Props) : RComponent<Props, RState>(p) {
         styledDiv {
             css {
                 display = Display.flex
+                padding(0.2.em)
                 onDesktop {
                     justifyContent = JustifyContent.flexEnd
                 }
@@ -74,7 +80,7 @@ class ModuleBar(p: Props) : RComponent<Props, RState>(p) {
                     justifyContent = JustifyContent.center
                 }
             }
-            searchBox {
+            search {
                 attrs {
                     theme = props.theme
                     hint = props.searchHint

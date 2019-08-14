@@ -11,6 +11,9 @@ fun CSSBuilder.onDesktop(builder: CSSBuilder.() -> Unit) = media("only screen an
     +builder
 }
 
+fun CSSBuilder.onPaper(builder: CSSBuilder.() -> Unit) = media("print") {
+    +builder
+}
 
 val isDesktop get() = window.screen.availWidth > window.screen.availHeight
 
