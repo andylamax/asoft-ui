@@ -20,6 +20,7 @@ import tz.co.asoft.ui.react.composites.framework.applications.Application
 import tz.co.asoft.ui.react.composites.framework.navmenu.NavPane
 import tz.co.asoft.ui.react.tools.onDesktop
 import tz.co.asoft.ui.react.tools.onMobile
+import tz.co.asoft.ui.react.tools.onPaper
 import kotlin.browser.window
 import kotlin.reflect.KClass
 
@@ -135,6 +136,9 @@ class FrameworkComponent(p: Props) : RComponent<Props, State>(p) {
                 top = 0.px
                 width = 80.vw
             }
+            onPaper {
+                display = Display.none
+            }
         }
         navPane()
     }
@@ -146,6 +150,10 @@ class FrameworkComponent(p: Props) : RComponent<Props, State>(p) {
                 width = 80.pct
             }
             onMobile {
+                width = 100.pct
+            }
+
+            onPaper {
                 width = 100.pct
             }
         }

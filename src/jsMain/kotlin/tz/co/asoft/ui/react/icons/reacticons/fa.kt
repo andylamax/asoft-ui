@@ -16,6 +16,9 @@ external val faBars: RClass<IconProps>
 @JsName("FaUserAlt")
 external val faUserAlt: RClass<IconProps>
 
+@JsName("FaSearch")
+external val faSearch: RClass<IconProps>
+
 @JsName("FaBriefcase")
 external val faBriefcase: RClass<IconProps>
 

@@ -63,6 +63,7 @@ class SearchBox(p: Props) : RComponent<Props, RState>(p) {
     }
 }
 
+@Deprecated("Use search instead")
 fun RBuilder.searchBox(handler: RHandler<Props> = {}) = child(SearchBox::class.js, Props) {
     attrs {
         handler()
