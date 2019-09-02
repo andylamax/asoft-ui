@@ -13,6 +13,7 @@ expect abstract class ScopedComponent<P : CProps, S : CState> : Component<P, S>,
 
     protected val lifeCycle: LifeCycle
     protected val job: Job
+    override val coroutineContext: CoroutineContext
 
     fun <T> LiveData<T>.observe(onChange: (T) -> Unit): Observer<T>
 

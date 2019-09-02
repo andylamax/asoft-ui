@@ -15,7 +15,7 @@ actual abstract class ScopedComponent<P : CProps, S : CState> : Component<P, S>,
     protected actual val lifeCycle = LifeCycle()
     protected actual val job: Job = Job()
 
-    override val coroutineContext: CoroutineContext
+    actual override val coroutineContext: CoroutineContext
         get() = Dispatchers.Default + job
 
     protected actual fun syncState(context: CoroutineContext, buildState: suspend S.() -> Unit) {
