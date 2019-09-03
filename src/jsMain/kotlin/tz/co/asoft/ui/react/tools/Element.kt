@@ -20,9 +20,9 @@ operator fun HTMLFormElement.get(name: String): String? {
 
 val submit get() = TagSelector("""[type="submit"]""")
 
-fun <E : Element> Element.node(selector: TagSelector) = querySelector(selector.tagName)
-fun <E : Element> Element.nodes(selector: TagSelector) = querySelectorAll(selector.tagName)
-fun <E : Element> Element.nodeNamed(name: String) = querySelector("""[name="$name"]""")
+fun <E : Element> Element.node(selector: TagSelector) = querySelector(selector.tagName).unsafeCast<E?>()
+fun <E : Element> Element.nodes(selector: TagSelector) = querySelectorAll(selector.tagName).unsafeCast<E?>()
+fun <E : Element> Element.nodeNamed(name: String) = querySelector("""[name="$name"]""").unsafeCast<E?>()
 fun Element.input(name: String) = nodeNamed<HTMLInputElement>(name)
 
 fun HTMLInputElement.type(text: String) {
