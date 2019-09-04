@@ -21,7 +21,7 @@ import kotlin.js.Date
 
 class DateInput(p: Props) : RComponent<Props, State>(p) {
 
-    object Props : ThemedProps() {
+    class Props : ThemedProps() {
         var hint = ""
         var type = InputType.date
         var label = ""
@@ -88,6 +88,10 @@ class DateInput(p: Props) : RComponent<Props, State>(p) {
                 }
             }
 
+            props.data.forEach { (k, v) ->
+                attrs["data-$k"] = v
+            }
+
             css {
                 outline = Outline.none
                 +TextInputStyles.input
@@ -98,4 +102,7 @@ class DateInput(p: Props) : RComponent<Props, State>(p) {
     }
 }
 
-fun RBuilder.dateInput(handler: RHandler<Props> = {}) = child(DateInput::class.js, Props, handler)
+fun RBuilder.dateInput(name: String = "", handler: RHandler<Props> = {}) = child(DateInput::class.js, Props()) {
+    attrs.data["value"] = name
+    handler()
+}

@@ -9,9 +9,10 @@ import kotlinx.html.js.onClickFunction
 import react.*
 import styled.css
 import styled.styledDiv
+import styled.styledInput
 
 class CheckBox(p: Props) : RComponent<Props, State>(p) {
-    object Props : ThemedProps() {
+    class Props : ThemedProps() {
         var size = 1.0   // in em
         var borderSize = 2 // in px
         var lineSize = 1 // in px
@@ -19,19 +20,23 @@ class CheckBox(p: Props) : RComponent<Props, State>(p) {
         var checked: Boolean? = null
         var label = ""
         var name = ""
-            set(value) {
-                label = value
-                field = value
-            }
         var isRequired = true
     }
 
-    class State(p: Props = Props) : RState {
+    class State(p: Props = Props()) : RState {
         var checked = p.checked ?: false
     }
 
     init {
         state = State(p)
+    }
+
+    private fun RBuilder.realInput() = styledInput {
+        css { display = Display.none }
+        attrs {
+            name = props.name
+            checked = state.checked
+        }
     }
 
     override fun RBuilder.render(): dynamic = styledDiv {
@@ -43,12 +48,17 @@ class CheckBox(p: Props) : RComponent<Props, State>(p) {
             +CheckBoxStyles.root
         }
 
+        realInput()
+
         styledDiv {
             attrs.onClickFunction = {
                 setState {
-                    checked = checked.not()
+                    checked = !checked
                     props.onChanged(checked)
                 }
+            }
+            props.data.forEach { (k, v) ->
+                attrs["data-$k"] = v
             }
             css {
                 +CheckBoxStyles.root
@@ -94,7 +104,8 @@ class CheckBox(p: Props) : RComponent<Props, State>(p) {
     }
 }
 
-fun RBuilder.checkbox(label: String = "", handler: RHandler<Props> = {}) = child(CheckBox::class.js, Props.newJsObject()) {
+fun RBuilder.checkbox(label: String = "", handler: RHandler<Props> = {}) = child(CheckBox::class.js, Props()) {
     attrs.label = label
+    attrs.data["value"] = label
     handler()
 }

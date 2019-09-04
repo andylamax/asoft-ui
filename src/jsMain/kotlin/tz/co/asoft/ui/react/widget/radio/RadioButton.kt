@@ -16,10 +16,11 @@ import styled.styledDiv
 import styled.styledInput
 
 class RadioButton : RComponent<Props, RState>() {
-    object Props : RProps {
+    class Props : RProps {
         var theme = Theme()
         var label = "Radio Label"
         var name = ""
+        var data = mutableMapOf<String,Any>()
         var style: dynamic = js { }
         var checked: Boolean? = null
         var onChange = { _: Boolean -> }
@@ -70,6 +71,10 @@ class RadioButton : RComponent<Props, RState>() {
                     props.onChange((it.target as HTMLInputElement).checked)
                 }
             }
+
+            props.data.forEach { (k, v) ->
+                attrs["data-$k"] = v
+            }
         }
 
         styledDiv {
@@ -81,7 +86,8 @@ class RadioButton : RComponent<Props, RState>() {
     }
 }
 
-fun RBuilder.radioButton(label: String = "", handler: RHandler<Props> = {}) = child(RadioButton::class.js, Props) {
+fun RBuilder.radioButton(label: String = "", handler: RHandler<Props> = {}) = child(RadioButton::class.js, Props()) {
     attrs.label = label
+    attrs.data["value"] = label
     handler()
 }

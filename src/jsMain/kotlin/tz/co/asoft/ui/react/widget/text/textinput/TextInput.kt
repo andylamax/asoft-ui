@@ -21,7 +21,7 @@ import kotlin.browser.document
 
 class TextInput(props: Props) : RComponent<Props, State>(props) {
 
-    object Props : ThemedProps() {
+    class Props : ThemedProps() {
         var hint = ""
         var type = InputType.text
         var label = ""
@@ -95,6 +95,10 @@ class TextInput(props: Props) : RComponent<Props, State>(props) {
                 }
             }
 
+            props.data.forEach { (k, v) ->
+                attrs["data-$k"] = v
+            }
+
             css {
                 outline = Outline.none
                 +TextInputStyles.input
@@ -105,7 +109,8 @@ class TextInput(props: Props) : RComponent<Props, State>(props) {
     }
 }
 
-fun RBuilder.textInput(handler: RHandler<Props> = {}) = child(TextInput::class.js, Props.newJsObject()) {
+fun RBuilder.textInput(name: String = "",handler: RHandler<Props> = {}) = child(TextInput::class.js, Props()) {
     attrs.type = InputType.text
+    attrs.data["value"] = name
     handler()
 }

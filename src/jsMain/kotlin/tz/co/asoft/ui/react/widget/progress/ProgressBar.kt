@@ -15,7 +15,7 @@ import styled.styledProgress
 import kotlin.browser.window
 
 class ProgressBar(p: Props) : RComponent<Props, State>(p) {
-    object Props : ThemedProps() {
+    class Props : ThemedProps() {
         var value: Number? = null
     }
 
@@ -81,7 +81,7 @@ class ProgressBar(p: Props) : RComponent<Props, State>(p) {
     }
 }
 
-fun RBuilder.progressBar(value: Number? = null, handler: RHandler<Props>) = child(ProgressBar::class.js, Props) {
+fun RBuilder.progressBar(value: Number? = null, handler: RHandler<Props>) = child(ProgressBar::class.js, Props()) {
     attrs.value = value
     handler()
 }

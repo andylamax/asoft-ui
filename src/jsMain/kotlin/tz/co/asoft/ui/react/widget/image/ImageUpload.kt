@@ -21,7 +21,7 @@ import styled.styledInput
 
 class ImageUpload(p: Props) : RComponent<Props, State>(p) {
 
-    object Props : ThemedProps() {
+    class Props : ThemedProps() {
         var onUploaded = { _: File, _: String -> }
     }
 
@@ -97,11 +97,13 @@ class ImageUpload(p: Props) : RComponent<Props, State>(p) {
                 position = Position.absolute
                 visibility = Visibility.hidden
             }
+
         }
     }
 }
 
-fun RBuilder.imageUpload(handler: RHandler<Props> = {}) = child(ImageUpload::class.js, Props) {
+fun RBuilder.imageUpload(handler: RHandler<Props> = {}) = child(ImageUpload::class.js, Props()) {
+    attrs.data["value"] = "image-upload"
     handler()
 }
 

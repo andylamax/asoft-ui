@@ -39,5 +39,6 @@ fun RBuilder.fab(theme: Theme, onClick: () -> Unit = {}) = styledDiv {
     attrs.onClickFunction = {
         onClick()
     }
+    attrs["data-value"] = "+"
     +"+"
 }

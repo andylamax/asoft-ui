@@ -4,6 +4,7 @@ import kotlinx.css.TagSelector
 import org.w3c.dom.Element
 import org.w3c.dom.HTMLFormElement
 import org.w3c.dom.HTMLInputElement
+import org.w3c.dom.asList
 
 operator fun HTMLFormElement.get(name: String): String? {
     val node = input(name)
@@ -28,3 +29,16 @@ fun Element.input(name: String) = nodeNamed<HTMLInputElement>(name)
 fun HTMLInputElement.type(text: String) {
     value = text
 }
+
+class By(val selector: String) {
+    companion object {
+        fun id(id: String) = By("#$id")
+        fun name(name: String) = attr("name", name)
+        fun className(className: String) = By(".$className")
+        fun attr(name: String, value: String) = By("[$name='$value']")
+        fun selector(selector: String) = By(selector)
+    }
+}
+
+fun <E : Element> Element.find(by: By) = querySelector(by.selector).unsafeCast<E>()
+fun <E : Element> Element.findAll(by: By) = querySelectorAll(by.selector).asList().unsafeCast<List<E>>()

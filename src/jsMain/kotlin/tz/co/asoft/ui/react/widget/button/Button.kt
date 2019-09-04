@@ -19,7 +19,7 @@ import styled.styledButton
 
 class Button(p: Props) : RComponent<Props, RState>(p) {
 
-    object Props : ThemedProps() {
+    class Props : ThemedProps() {
         var type = Type.Primary
         var text = ""
         var isSubmit = false
@@ -81,6 +81,10 @@ class Button(p: Props) : RComponent<Props, RState>(p) {
 
         attrs.onMouseDownFunction = { props.onMouseDown() }
 
+        props.data.forEach { (k, v) ->
+            attrs["data-$k"] = v
+        }
+
         +props.text
     }
 }
@@ -89,9 +93,10 @@ fun RBuilder.button(
         text: String = "P Button",
         type: Button.Type = Button.Type.Primary,
         handler: RHandler<Props> = {}
-) = child(Button::class.js, Props.newJsObject()) {
+) = child(Button::class.js, Props()) {
     attrs.text = text
     attrs.type = type
+    attrs.data["value"] = text
     handler()
 }
 

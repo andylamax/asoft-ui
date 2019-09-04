@@ -23,7 +23,7 @@ import kotlin.browser.document
 
 class SearchBox(p: Props) : RComponent<Props, RState>(p) {
 
-    object Props : ThemedProps() {
+    class Props : ThemedProps() {
         var hint = ""
         var onSearch = { _: String -> }
     }
@@ -64,8 +64,6 @@ class SearchBox(p: Props) : RComponent<Props, RState>(p) {
 }
 
 @Deprecated("Use search instead")
-fun RBuilder.searchBox(handler: RHandler<Props> = {}) = child(SearchBox::class.js, Props) {
-    attrs {
-        handler()
-    }
+fun RBuilder.searchBox(handler: RHandler<Props> = {}) = child(SearchBox::class.js, Props()) {
+    handler()
 }

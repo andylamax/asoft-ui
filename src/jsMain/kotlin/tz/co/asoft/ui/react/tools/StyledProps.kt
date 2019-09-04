@@ -7,6 +7,7 @@ import react.RProps
 
 abstract class StyledProps : RProps {
     var css: CSSBuilder.() -> Unit = {}
+    val data = mutableMapOf<String, Any>()
     var onClick = {}
 }
 

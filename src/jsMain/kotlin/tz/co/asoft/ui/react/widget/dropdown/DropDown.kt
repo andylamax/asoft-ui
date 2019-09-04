@@ -19,10 +19,9 @@ import styled.styledDiv
 import styled.styledOption
 import styled.styledSelect
 
-
 class DropDownComponent(p: Props) : RComponent<Props, State>(p) {
 
-    object Props : ThemedProps() {
+    class Props : ThemedProps() {
         var onChange = { _: Int, _: String -> }
         var value = ""
         var options = listOf<String>()
@@ -75,6 +74,11 @@ class DropDownComponent(p: Props) : RComponent<Props, State>(p) {
                     outline = Outline.none
                 }
             }
+
+            props.data.forEach { (k, v) ->
+                attrs["data-$k"] = v
+            }
+            
             props.options.forEachIndexed { i, it ->
                 styledOption {
                     attrs {
@@ -96,4 +100,7 @@ class DropDownComponent(p: Props) : RComponent<Props, State>(p) {
     }
 }
 
-fun RBuilder.dropDown(handler: RHandler<Props>) = child(DropDownComponent::class.js, Props.newJsObject(), handler)
+fun RBuilder.dropDown(name: String = "", handler: RHandler<Props>) = child(DropDownComponent::class.js, Props()) {
+    attrs.data["value"] = name
+    handler()
+}

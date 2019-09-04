@@ -17,13 +17,13 @@ import styled.styledSpan
 
 class Hamburger(p: Props) : RComponent<Props, State>(p) {
 
-    object Props : ThemedProps() {
+    class Props : ThemedProps() {
         var size = 2.em
         var onToggled = { _: Boolean -> }
         var isOpen = isMobile
     }
 
-    class State(p: Props = Props) : RState {
+    class State(p: Props = Props()) : RState {
         var isOpen = p.isOpen
     }
 
@@ -49,46 +49,48 @@ class Hamburger(p: Props) : RComponent<Props, State>(p) {
         }
     }
 
-    override fun RBuilder.render() {
-        state.isOpen = props.isOpen
+    override fun RBuilder.render(): dynamic = styledDiv {
+//        state.isOpen = props.isOpen
         val size = props.size
-        styledDiv {
-            attrs.onClickFunction = {
-                setState {
-                    isOpen = !isOpen
-                    props.onToggled(isOpen)
-                }
+        attrs.onClickFunction = {
+            setState {
+                isOpen = !isOpen
+                props.onToggled(isOpen)
             }
+        }
+
+        props.data.forEach { (k, v) ->
+            attrs["data-$k"] = v
+        }
+
+        css {
+            +HamburgerStyles.wrapper
+            +props.css
+            width = size
+            height = size
+        }
+
+        styledSpan {
             css {
-                +HamburgerStyles.wrapper
-                +props.css
-                width = size
-                height = size
+                +lineStyles(30.pct, (-45).deg)
             }
+        }
 
-            styledSpan {
-                css {
-                    +lineStyles(30.pct, (-45).deg)
-                }
+        styledSpan {
+            css {
+                +lineStyles(50.pct, 45.deg)
             }
+        }
 
-            styledSpan {
-                css {
-                    +lineStyles(50.pct, 45.deg)
-                }
-            }
-
-            styledSpan {
-                css {
-                    +lineStyles(70.pct, (-45).deg)
-                }
+        styledSpan {
+            css {
+                +lineStyles(70.pct, (-45).deg)
             }
         }
     }
 }
 
-fun RBuilder.hamburger(handler: RHandler<Props> = {}) = child(Hamburger::class.js, Props) {
-    attrs {
-        handler()
-    }
+fun RBuilder.hamburger(handler: RHandler<Props> = {}) = child(Hamburger::class.js, Props()) {
+    attrs.data["value"] = "hamburger"
+    handler()
 }
