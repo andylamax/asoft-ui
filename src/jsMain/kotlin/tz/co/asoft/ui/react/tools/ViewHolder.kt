@@ -1,5 +1,6 @@
 package tz.co.asoft.ui.react.tools
 
+import react.*
 import kotlin.browser.document
 
 open class ViewHolder {

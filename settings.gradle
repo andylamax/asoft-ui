@@ -4,16 +4,24 @@ pluginManagement {
             if (requested.id.id == "kotlin-multiplatform") {
                 useModule("org.jetbrains.kotlin:kotlin-gradle-plugin:${requested.version}")
             }
+
+            if (requested.id.namespace == "com.android") {
+                useModule("com.android.tools.build:gradle:${requested.version}")
+            }
         }
     }
 
     repositories {
-        maven { url 'https://dl.bintray.com/kotlin/kotlin-eap' }
+        google()
+
+        gradlePluginPortal()
+
+        maven { url = "https://dl.bintray.com/kotlin/kotlin-eap" }
 
         mavenCentral()
 
-        maven { url 'https://plugins.gradle.org/m2/' }
+        maven { url = "https://plugins.gradle.org/m2/" }
     }
 }
-rootProject.name = 'asoft-ui'
 
+rootProject.name = "asoft-ui"
