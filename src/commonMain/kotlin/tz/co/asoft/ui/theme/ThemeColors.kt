@@ -1,9 +1,7 @@
 package tz.co.asoft.ui.theme
 
 class ThemeColors(val light: String = "#ffffff", val main: String = light, val dark: String = main) {
-    constructor(main: String) : this(light = main) {
-
-    }
+    constructor(main: String) : this(light = main)
 }
 
 class TypoColors {

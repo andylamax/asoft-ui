@@ -3,13 +3,19 @@ package tz.co.asoft.components
 import android.os.Bundle
 import android.view.View
 import tz.co.asoft.ui.ComponentFragment
+import tz.co.asoft.ui.action.Action
+import tz.co.asoft.ui.alert
 
 actual abstract class Component<P : CProps, S : CState> actual constructor() : ComponentFragment<P, S>() {
 
-    actual val ctx get() : Any = activity!!.applicationContext
+    actual val ctx get() = activity!!.applicationContext!!
 
     actual constructor(props: P) : this() {
         this.props = props
+    }
+
+    actual open fun alert(msg: Any?) {
+        ctx.alert(msg)
     }
 
     actual open fun onReady() {}
@@ -32,5 +38,15 @@ actual abstract class Component<P : CProps, S : CState> actual constructor() : C
     override fun onDestroy() {
         onDone()
         super.onDestroy()
+    }
+
+    open fun showLoading(msg: String) = child(Loading::class, Loading.Props()) {
+        attrs.msg = msg
+        attrs.theme = props.theme
+    }
+
+    open fun showError(msg: String, actions: List<Action> = listOf()) = child(Error::class, Error.Props()) {
+        attrs.msg = msg
+        attrs.actions = actions
     }
 }

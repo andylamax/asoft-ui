@@ -76,8 +76,6 @@ abstract class ComponentFragment<P : CProps, S : CState> : Fragment() {
 
     private fun SyncStorage.restoreState(): S? = get(stateClassName)?.fromJson(stateClass)
 
-    fun alert(msg: Any?): Job? = context?.alert(msg)
-
     fun startComponentForResult(intent: Intent, requestCode: Int) {
         (activity as? ComponentActivity<*>)?.startComponentForResult(intent, requestCode)
     }

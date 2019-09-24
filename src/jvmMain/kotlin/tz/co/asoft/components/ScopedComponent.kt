@@ -23,9 +23,7 @@ actual abstract class ScopedComponent<P : CProps, S : CState> : Component<P, S>,
 
     actual fun <T> LiveData<T>.observe(onChange: (T) -> Unit) = observe(lifeCycle, onChange)
 
-    protected actual fun syncState(
-            context: kotlin.coroutines.CoroutineContext,
-            buildState: suspend S.() -> Unit
-    ) {
+    protected actual fun syncState(context: CoroutineContext, buildState: suspend S.() -> Unit) {
+
     }
 }
