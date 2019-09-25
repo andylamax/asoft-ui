@@ -7,6 +7,7 @@ import tz.co.asoft.platform.Ctx
 import tz.co.asoft.ui.action.Action
 import tz.or.self.ui.components.Error
 import tz.co.asoft.ui.react.composites.async.Loading
+import tz.co.asoft.ui.theme.Theme
 import kotlin.browser.window
 
 actual abstract class Component<P : CProps, S : CState> : RComponent<P, S> {
@@ -38,14 +39,12 @@ actual abstract class Component<P : CProps, S : CState> : RComponent<P, S> {
 
     fun RBuilder.showLoading(msg: String) = child(Loading::class.js, Loading.Props()) {
         attrs.msg = msg
-        val p = props
-        if (p is ModuleProps) attrs { theme = p.theme }
+        props.unsafeCast<ModuleProps?>()?.theme?.let { attrs.theme = it }
     }
 
     fun RBuilder.showError(msg: String, actions: List<Action> = listOf()) = child(Error::class.js, Error.Props()) {
         attrs.msg = msg
         attrs.actions = actions
-        val p = props
-        if (p is ModuleProps) attrs { theme = p.theme }
+        props.unsafeCast<ModuleProps?>()?.theme?.let { attrs.theme = it }
     }
 }
