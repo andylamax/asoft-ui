@@ -14,18 +14,17 @@ class Loading : Component<Loading.Props, CState>() {
 
     override val layoutId = R.layout.loading
 
-    class VH(view: View) : ViewHolder(view) {
+    class VH(view: View?) : ViewHolder(view) {
         val progressBar: ProgressBar by Id(R.id.progress_bar)
         val loadingText: TextView by Id(R.id.loading_text)
     }
 
     override fun onReady() {
         super.onReady()
-        VH(view!!).bindUI()
+        VH(view).bindUI()
     }
 
     private fun VH.bindUI() {
-        progressBar.setBackgroundColor(props.theme.primaryColor.main())
         loadingText.text = props.msg
     }
 }

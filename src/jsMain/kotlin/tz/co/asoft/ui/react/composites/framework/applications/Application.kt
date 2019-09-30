@@ -133,24 +133,12 @@ class Application : ScopedRComponent<Props, State>() {
                     css {
                         backgroundColor = props.theme.text.onPrimary.main()
                         borderRadius = 50.pct
-                        cursor = Cursor.pointer
-                        onMobile {
-                            height = 2.8.em
-                            width = 2.8.em
-                        }
-                        onDesktop {
-                            height = 1.5.em
-                            width = 1.5.em
-                        }
+                        +ApplicationSideStyles.userImage
                     }
 
                     if (props.user.photoUrl.isNotEmpty()) {
                         styledImg(src = props.user.photoUrl) {
-                            css {
-                                width = 100.pct
-                                height = 100.pct
-                                borderRadius = 50.pct
-                            }
+                            css { +ApplicationSideStyles.userImage }
                         }
                     }
 

@@ -3,7 +3,7 @@ package tz.co.asoft.ui
 import android.view.View
 import kotlin.reflect.KProperty
 
-open class ViewHolder(protected val view: View) {
+open class ViewHolder(protected val view: View?) {
 
     fun viewId(id: Int) = Delegate(id)
 
@@ -11,7 +11,7 @@ open class ViewHolder(protected val view: View) {
 
     inner class Delegate(private val id: Int) {
         operator fun <T:View> getValue(thisRef: Any?, prop: KProperty<*>): T {
-            return view.findViewById(id)
+            return view!!.findViewById(id)
         }
     }
 }

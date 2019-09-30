@@ -27,7 +27,7 @@ import kotlin.reflect.KClass
 class FrameworkComponent(p: Props) : RComponent<Props, State>(p) {
     private var history: RouteResultHistory? = null
 
-    object Props : RProps {
+    class Props : RProps {
         var themes = arrayOf<Theme>()
         var footer = "Footer"
         var title = "Title"

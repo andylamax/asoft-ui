@@ -20,9 +20,8 @@ actual abstract class ScopedComponent<P : CProps, S : CState> : Component<P, S>,
 
     protected actual fun syncState(context: CoroutineContext, buildState: suspend S.() -> Unit) {
         launch(context) {
-            if (stateIsAltered(buildState)) {
-                render()
-            }
+            state.apply { buildState() }
+            render()
         }
     }
 
@@ -36,13 +35,6 @@ actual abstract class ScopedComponent<P : CProps, S : CState> : Component<P, S>,
     override fun onStop() {
         lifeCycle.stop()
         super.onStop()
-    }
-
-    private suspend fun stateIsAltered(buildState: suspend S.() -> Unit): Boolean {
-        val preState = gson.toJson(state)
-        state.apply { buildState() }
-        val postState = gson.toJson(state)
-        return preState != postState
     }
 
     override fun onDestroy() {

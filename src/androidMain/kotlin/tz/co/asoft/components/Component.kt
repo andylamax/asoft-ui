@@ -2,11 +2,12 @@ package tz.co.asoft.components
 
 import android.os.Bundle
 import android.view.View
-import tz.co.asoft.ui.ComponentFragment
+import tz.co.asoft.components.android.AndroidComponent
+import tz.co.asoft.components.android.child
 import tz.co.asoft.ui.action.Action
 import tz.co.asoft.ui.alert
 
-actual abstract class Component<P : CProps, S : CState> actual constructor() : ComponentFragment<P, S>() {
+actual abstract class Component<P : CProps, S : CState> actual constructor() : AndroidComponent<P, S>() {
 
     actual val ctx get() = activity!!.applicationContext!!
 
@@ -30,7 +31,7 @@ actual abstract class Component<P : CProps, S : CState> actual constructor() : C
     }
 
     actual final override fun setState(builder: S.() -> Unit) {
-        super.setState(buildState = builder)
+        super.setState(builder)
     }
 
     actual open fun onDone() {}

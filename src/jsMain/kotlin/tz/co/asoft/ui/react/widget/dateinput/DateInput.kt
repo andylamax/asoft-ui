@@ -13,6 +13,7 @@ import kotlinx.html.js.onChangeFunction
 import kotlinx.html.js.onFocusFunction
 import org.w3c.dom.HTMLInputElement
 import react.*
+import react.dom.defaultValue
 import styled.css
 import styled.styledDiv
 import styled.styledInput
@@ -26,6 +27,7 @@ class DateInput(p: Props) : RComponent<Props, State>(p) {
         var type = InputType.date
         var label = ""
         var name = ""
+        var value: Date? = null
         var onChange = { _: Date -> }
         var onBlur = {}
         var isRequired = true
@@ -67,17 +69,16 @@ class DateInput(p: Props) : RComponent<Props, State>(p) {
                 name = props.name
                 required = props.isRequired
 
+                props.value?.let { defaultValue = it.toISOString().substring(0, 10) }
                 type = if (state.textValue.isEmpty() && !state.isFocused) InputType.text else props.type
 
                 onChangeFunction = {
-                    state.textValue = (document.getElementById(id) as HTMLInputElement).value
+                    state.textValue = it.target.unsafeCast<HTMLInputElement>().value
                     props.onChange(Date(Date.parse(state.textValue)))
                 }
 
                 onFocusFunction = {
-                    setState {
-                        isFocused = true
-                    }
+                    setState { isFocused = true }
                 }
 
                 onBlurFunction = {

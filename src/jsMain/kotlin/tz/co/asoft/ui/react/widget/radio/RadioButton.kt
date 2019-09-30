@@ -20,12 +20,12 @@ class RadioButton : RComponent<Props, RState>() {
         var theme = Theme()
         var label = "Radio Label"
         var name = ""
-        var data = mutableMapOf<String,Any>()
+        var data = mutableMapOf<String, Any>()
         var style: dynamic = js { }
         var checked: Boolean? = null
         var onChange = { _: Boolean -> }
         var css: CSSBuilder.() -> Unit = {}
-        var value = ""
+        var isRequired = true
     }
 
     override fun RBuilder.render(): dynamic = styledDiv {
@@ -45,9 +45,7 @@ class RadioButton : RComponent<Props, RState>() {
                 height = 1.em
                 borderRadius = 50.pct
                 border(2.px, BorderStyle.solid, props.theme.primaryColor.main())
-                focus {
-                    outline = Outline.none
-                }
+                focus { outline = Outline.none }
                 checked {
                     after {
                         position = Position.absolute
@@ -61,15 +59,11 @@ class RadioButton : RComponent<Props, RState>() {
                 }
             }
             attrs {
-                props.checked?.let {
-                    defaultChecked = it
-                }
+                props.checked?.let { defaultChecked = it }
                 type = InputType.radio
                 name = props.name
-                value = props.value
-                onChangeFunction = {
-                    props.onChange((it.target as HTMLInputElement).checked)
-                }
+                required = props.isRequired
+                onChangeFunction = { props.onChange((it.target.unsafeCast<HTMLInputElement>()).checked) }
             }
 
             props.data.forEach { (k, v) ->
@@ -78,9 +72,7 @@ class RadioButton : RComponent<Props, RState>() {
         }
 
         styledDiv {
-            css {
-                marginLeft = 0.5.em
-            }
+            css { marginLeft = 0.5.em }
             +props.label
         }
     }
