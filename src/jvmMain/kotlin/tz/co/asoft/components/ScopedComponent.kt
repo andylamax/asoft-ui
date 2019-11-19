@@ -16,14 +16,14 @@ actual abstract class ScopedComponent<P : CProps, S : CState> : Component<P, S>,
     actual constructor(props: P)
 
     protected actual val lifeCycle: ILifeCycle get() = this
-    actual override val job = Job()
+    protected actual val job = Job()
     actual override val coroutineContext: CoroutineContext
         get() = job + Dispatchers.Main
 
     actual fun <T> LiveData<T>.observe(onChange: (T) -> Unit) = observe(lifeCycle, onChange)
 
     actual fun <T> LiveData<T>.bind() {
-        
+
     }
 
     protected actual fun syncState(context: CoroutineContext, buildState: suspend S.() -> Unit) {
