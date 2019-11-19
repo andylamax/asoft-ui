@@ -63,6 +63,9 @@ class DropDownComponent(p: Props) : RComponent<Props, State>(p) {
                     props.onChange(props.options.indexOf(state.value), state.value)
                 }
                 name = props.name
+                if (state.value.isNotBlank()) {
+                    value = state.value
+                }
             }
             css {
                 border = "none"
@@ -78,7 +81,7 @@ class DropDownComponent(p: Props) : RComponent<Props, State>(p) {
             props.data.forEach { (k, v) ->
                 attrs["data-$k"] = v
             }
-            
+
             props.options.forEachIndexed { i, it ->
                 styledOption {
                     attrs {
@@ -91,7 +94,7 @@ class DropDownComponent(p: Props) : RComponent<Props, State>(p) {
                         } else {
                             it
                         }
-                        selected = it == state.value
+//                        selected = it == state.value
                     }
                     +it
                 }

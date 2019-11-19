@@ -10,6 +10,7 @@ import kotlinx.html.InputType
 import kotlinx.html.js.onChangeFunction
 import org.w3c.dom.HTMLInputElement
 import react.*
+import react.dom.defaultValue
 import react.dom.jsStyle
 import styled.css
 import styled.styledDiv
@@ -26,6 +27,7 @@ class RadioButton : RComponent<Props, RState>() {
         var onChange = { _: Boolean -> }
         var css: CSSBuilder.() -> Unit = {}
         var isRequired = true
+        var value: String? = null
     }
 
     override fun RBuilder.render(): dynamic = styledDiv {
@@ -59,6 +61,7 @@ class RadioButton : RComponent<Props, RState>() {
                 }
             }
             attrs {
+                props.value?.let { defaultValue = it }
                 props.checked?.let { defaultChecked = it }
                 type = InputType.radio
                 name = props.name

@@ -6,6 +6,7 @@ import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.GlobalScope
 import kotlinx.coroutines.launch
 
+@Deprecated("Use the one from tz.co.asoft.tools")
 fun Context.alert(msg: Any?) = GlobalScope.launch(Dispatchers.Main) {
     Toast.makeText(this@alert, msg.toString(), Toast.LENGTH_LONG).show()
 }

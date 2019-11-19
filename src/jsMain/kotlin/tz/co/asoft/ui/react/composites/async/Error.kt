@@ -1,19 +1,20 @@
-package tz.or.self.ui.components
+package tz.co.asoft.ui.react.composites.async
 
+import kotlinx.coroutines.launch
 import kotlinx.css.*
 import react.RBuilder
 import styled.css
 import styled.styledDiv
 import tz.co.asoft.components.CState
-import tz.co.asoft.components.Component
-import tz.co.asoft.ui.module.ModuleProps
+import tz.co.asoft.components.ScopedComponent
 import tz.co.asoft.ui.action.Action
+import tz.co.asoft.ui.module.ModuleProps
+import tz.co.asoft.ui.react.composites.async.Error.Props
 import tz.co.asoft.ui.react.icons.reacticons.mdErrorOutline
 import tz.co.asoft.ui.react.widget.button.primaryButton
 import tz.co.asoft.ui.theme.main
-import tz.or.self.ui.components.Error.Props
 
-class Error(p: Props) : Component<Props, CState>(p) {
+class Error(p: Props) : ScopedComponent<Props, CState>(p) {
     class Props : ModuleProps() {
         var msg = ""
         var actions = listOf<Action>()
@@ -55,7 +56,7 @@ class Error(p: Props) : Component<Props, CState>(p) {
                 primaryButton(it.name) {
                     attrs.css = { margin(1.em) }
                     attrs { theme = props.theme }
-                    attrs.onClick = { it.handler() }
+                    attrs.onClick = { launch { it.handler() } }
                 }
             }
         }

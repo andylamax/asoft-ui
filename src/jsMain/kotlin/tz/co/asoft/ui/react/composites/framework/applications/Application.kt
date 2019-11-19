@@ -162,8 +162,8 @@ class Application : ScopedRComponent<Props, State>() {
 
             routeProps = it
 
-            setTitle = {
-                (document.getElementById(APP_BAR_ID).unsafeCast<HTMLDivElement?>())?.innerText = it
+            setTitle = { title ->
+                (document.getElementById(APP_BAR_ID).unsafeCast<HTMLDivElement?>())?.innerText = title
             }
 
             setTheme = props.setTheme

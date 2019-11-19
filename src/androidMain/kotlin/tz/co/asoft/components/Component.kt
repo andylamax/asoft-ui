@@ -4,12 +4,17 @@ import android.os.Bundle
 import android.view.View
 import tz.co.asoft.components.android.AndroidComponent
 import tz.co.asoft.components.android.child
+import tz.co.asoft.persist.result.catching
+import tz.co.asoft.persist.tools.Cause
+import tz.co.asoft.platform.core.Activity
+import tz.co.asoft.tools.alert
 import tz.co.asoft.ui.action.Action
-import tz.co.asoft.ui.alert
 
 actual abstract class Component<P : CProps, S : CState> actual constructor() : AndroidComponent<P, S>() {
 
-    actual val ctx get() = activity!!.applicationContext!!
+    actual val activity: Activity get() = requireActivity()
+
+    actual val ctx get() = activity.applicationContext!!
 
     actual constructor(props: P) : this() {
         this.props = props
@@ -23,31 +28,53 @@ actual abstract class Component<P : CProps, S : CState> actual constructor() : A
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        onReady()
+        if (savedInstanceState == null) {
+            onReady()
+        }
     }
 
-    actual override fun onStop() {
-        super.onStop()
+    override fun onResume() {
+        super.onResume()
+        onResumed()
+    }
+
+    actual open fun onResumed() {
+
+    }
+
+    override fun onPause() {
+        onPaused()
+        super.onPause()
+    }
+
+    actual open fun onPaused() {
+
     }
 
     actual final override fun setState(builder: S.() -> Unit) {
         super.setState(builder)
     }
 
-    actual open fun onDone() {}
+    actual open fun onFinished() {}
 
     override fun onDestroy() {
-        onDone()
+        onFinished()
         super.onDestroy()
     }
 
-    open fun showLoading(msg: String) = child(Loading::class, Loading.Props()) {
-        attrs.msg = msg
-        attrs.theme = props.theme
+    open fun showLoading(message: String) = child(Loading::class, Loading.Props()) {
+        catching {
+            attrs {
+                msg = message
+                theme = props.theme
+            }
+        }
     }
 
-    open fun showError(msg: String, actions: List<Action> = listOf()) = child(Error::class, Error.Props()) {
-        attrs.msg = msg
-        attrs.actions = actions
+    open fun showError(message: String, actions: List<Action> = listOf()) = child(Error::class, Error.Props()) {
+        attrs {
+            msg = message
+            theme = props.theme
+        }
     }
 }

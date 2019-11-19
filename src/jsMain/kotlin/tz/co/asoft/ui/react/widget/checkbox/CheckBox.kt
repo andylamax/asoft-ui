@@ -7,6 +7,7 @@ import tz.co.asoft.ui.react.widget.checkbox.CheckBox.Props
 import tz.co.asoft.ui.react.widget.checkbox.CheckBox.State
 import kotlinx.html.js.onClickFunction
 import react.*
+import react.dom.defaultValue
 import styled.css
 import styled.styledDiv
 import styled.styledInput
@@ -20,6 +21,7 @@ class CheckBox(p: Props) : RComponent<Props, State>(p) {
         var checked: Boolean? = null
         var label = ""
         var name = ""
+        var value: String? = null
         var isRequired = true
     }
 
@@ -36,6 +38,7 @@ class CheckBox(p: Props) : RComponent<Props, State>(p) {
         attrs {
             name = props.name
             checked = state.checked
+            props.value?.let { defaultValue = it }
         }
     }
 

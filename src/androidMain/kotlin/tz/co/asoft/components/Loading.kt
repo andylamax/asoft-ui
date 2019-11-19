@@ -12,11 +12,15 @@ class Loading : Component<Loading.Props, CState>() {
         var msg = ""
     }
 
+    init {
+        props = Props()
+    }
+
     override val layoutId = R.layout.loading
 
     class VH(view: View?) : ViewHolder(view) {
-        val progressBar: ProgressBar by Id(R.id.progress_bar)
-        val loadingText: TextView by Id(R.id.loading_text)
+        val progressBar: ProgressBar? by Id(R.id.progress_bar)
+        val loadingText: TextView? by Id(R.id.loading_text)
     }
 
     override fun onReady() {
@@ -25,6 +29,6 @@ class Loading : Component<Loading.Props, CState>() {
     }
 
     private fun VH.bindUI() {
-        loadingText.text = props.msg
+        loadingText?.text = props.msg
     }
 }

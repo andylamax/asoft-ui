@@ -67,10 +67,8 @@ class Button(p: Props) : RComponent<Props, RState>(p) {
 
             focus { outline = Outline.none }
         }
-
-        if (props.isSubmit) {
-            attrs.type = ButtonType.submit
-        }
+        
+        attrs.type = if (props.isSubmit) ButtonType.submit else ButtonType.button
 
         attrs.onClickFunction = {
             if (!props.isSubmit) {

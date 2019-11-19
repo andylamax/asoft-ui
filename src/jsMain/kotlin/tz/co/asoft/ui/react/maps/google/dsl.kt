@@ -43,6 +43,7 @@ fun RBuilder.polyLine(paths: Array<LatLng>, handler: RHandler<Polyline.Props> = 
         options.paths = paths
     }
     attrs.path = paths
+    handler()
 }
 
 fun RBuilder.marker(handler: RHandler<Marker.Props> = {}) = child(Marker::class) {

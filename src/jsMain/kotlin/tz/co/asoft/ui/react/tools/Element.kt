@@ -19,6 +19,20 @@ operator fun HTMLFormElement.get(name: String): String? {
     }
 }
 
+fun HTMLFormElement.error(name: String, error: String) {
+    val node = input(name) ?: return
+    val prevDisplay = node.style.display
+    console.log(prevDisplay)
+    if (prevDisplay == "none") {
+        node.style.display = "inline"
+    }
+    node.setCustomValidity(error)
+    node.oninput = {
+        node.style.display = prevDisplay
+        node.setCustomValidity("")
+    }
+}
+
 val submit get() = TagSelector("""[type="submit"]""")
 
 fun <E : Element> Element.node(selector: TagSelector) = querySelector(selector.tagName).unsafeCast<E?>()
