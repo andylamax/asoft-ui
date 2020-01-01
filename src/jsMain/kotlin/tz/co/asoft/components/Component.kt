@@ -10,6 +10,7 @@ import tz.co.asoft.ui.react.composites.async.Error
 import tz.co.asoft.ui.react.composites.async.Loading
 import kotlin.browser.window
 
+@Deprecated("Use Component")
 actual abstract class Component<P : CProps, S : CState> : RComponent<P, S> {
 
     actual constructor() : super()

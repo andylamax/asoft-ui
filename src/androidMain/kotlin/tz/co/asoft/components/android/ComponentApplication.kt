@@ -9,6 +9,7 @@ import tz.co.asoft.components.CProps
 import tz.co.asoft.components.CState
 import kotlin.system.exitProcess
 
+@Deprecated("Try not to use this")
 class ComponentApplication : MultiDexApplication() {
     val props by lazy { mutableMapOf<String, CProps>() }
     val state by lazy { mutableMapOf<String, CState>() }

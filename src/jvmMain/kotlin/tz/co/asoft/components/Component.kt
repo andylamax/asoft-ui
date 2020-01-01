@@ -3,6 +3,7 @@ package tz.co.asoft.components
 import tz.co.asoft.platform.core.Activity
 import tz.co.asoft.platform.core.Ctx
 
+@Deprecated("Use from the component package")
 actual abstract class Component<P : CProps, S : CState> {
     actual constructor()
 

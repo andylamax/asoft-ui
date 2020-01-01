@@ -8,6 +8,7 @@ import react.*
 import react.router.dom.routeLink
 import styled.css
 import styled.styledDiv
+import tz.co.asoft.auth.usecase.permissions.hasPermits
 import tz.co.asoft.ui.module.Module
 import tz.co.asoft.ui.module.ModuleProps
 import tz.co.asoft.ui.react.composites.framework.navmenu.NavMenuComponent.Props

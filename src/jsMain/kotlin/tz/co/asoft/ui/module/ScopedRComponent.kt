@@ -7,8 +7,6 @@ import kotlinx.coroutines.Job
 import kotlinx.coroutines.launch
 import react.*
 import tz.co.asoft.components.CProps
-import tz.co.asoft.components.CState
-import tz.co.asoft.rx.subscriber.Subscriber
 import kotlin.coroutines.CoroutineContext
 import kotlin.reflect.KClass
 
@@ -42,7 +40,6 @@ abstract class ScopedRComponent<P : RProps, S : RState> : RComponent<P, S>, Coro
 }
 
 abstract class ObservingRComponent<T, P : RProps, S : RState> : ScopedRComponent<P, S> {
-    var subscriber: Subscriber<T> = Subscriber()
 
     constructor() : super() {
         state = jsObject { init() }
@@ -54,7 +51,6 @@ abstract class ObservingRComponent<T, P : RProps, S : RState> : ScopedRComponent
 
     override fun componentWillUnmount() {
         super.componentWillUnmount()
-        subscriber.cancel()
     }
 }
 
@@ -69,9 +65,9 @@ abstract class ObservingComponent<T, P : RProps, S : RState> : ObservingRCompone
 }
 
 inline fun <P : CProps, reified T : Component<P, *>> RBuilder.child(
-    clazz: KClass<T>,
-    props: P? = null,
-    noinline handler: RHandler<P>
+        clazz: KClass<T>,
+        props: P? = null,
+        noinline handler: RHandler<P>
 ): ReactElement {
     val p: P = props ?: try {
         var newProps = T::class.js.asDynamic().Props.unsafeCast<P>()

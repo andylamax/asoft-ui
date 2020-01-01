@@ -16,7 +16,7 @@ class Error : ScopedComponent<Error.Props, CState>() {
     }
 
     init {
-        props = Props()
+        realProps = Props()
     }
 
     override val layoutId = R.layout.error

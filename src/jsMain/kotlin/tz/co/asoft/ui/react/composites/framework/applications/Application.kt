@@ -17,6 +17,7 @@ import styled.css
 import styled.styledDiv
 import styled.styledImg
 import styled.styledSection
+import tz.co.asoft.auth.usecase.permissions.hasPermits
 import tz.co.asoft.ui.module.Module
 import tz.co.asoft.ui.module.ModuleProps
 import tz.co.asoft.ui.module.ScopedRComponent

@@ -5,7 +5,6 @@ import android.widget.ProgressBar
 import android.widget.TextView
 import tz.co.asoft.ui.R
 import tz.co.asoft.ui.ViewHolder
-import tz.co.asoft.ui.theme.main
 
 class Loading : Component<Loading.Props, CState>() {
     class Props : CProps() {
@@ -13,7 +12,7 @@ class Loading : Component<Loading.Props, CState>() {
     }
 
     init {
-        props = Props()
+        realProps = Props()
     }
 
     override val layoutId = R.layout.loading

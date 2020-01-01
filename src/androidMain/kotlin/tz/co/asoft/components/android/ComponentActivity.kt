@@ -5,28 +5,27 @@ import androidx.appcompat.app.AppCompatActivity
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.Job
+import kotlinx.coroutines.SupervisorJob
 import tz.co.asoft.ui.R
 import kotlin.coroutines.CoroutineContext
 
 open class ComponentActivity : AppCompatActivity(), Parent, CoroutineScope {
-    protected val job by lazy { Job() }
+    protected val job = SupervisorJob()
     override val coroutineContext: CoroutineContext get() = job + Dispatchers.Main
 
-    override val fManager get() = supportFragmentManager!!
+    override val fManager get() = supportFragmentManager
 
     val ctx get() = applicationContext!!
 
-    val app get() = application as? ComponentApplication
+    val app get() = application
 
-    open val layoutId by lazy { R.layout.fragment_frame }
-    override val frameId by lazy { R.id.frame }
+    open val layoutId = R.layout.fragment_frame
+    override val frameId = R.id.frame
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(layoutId)
-        if (savedInstanceState == null) {
-            render()
-        }
+        render()
     }
 
     override fun onDestroy() {

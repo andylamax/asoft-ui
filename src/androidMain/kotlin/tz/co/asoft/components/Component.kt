@@ -5,7 +5,6 @@ import android.view.View
 import tz.co.asoft.components.android.AndroidComponent
 import tz.co.asoft.components.android.child
 import tz.co.asoft.persist.result.catching
-import tz.co.asoft.persist.tools.Cause
 import tz.co.asoft.platform.core.Activity
 import tz.co.asoft.tools.alert
 import tz.co.asoft.ui.action.Action
@@ -17,7 +16,7 @@ actual abstract class Component<P : CProps, S : CState> actual constructor() : A
     actual val ctx get() = activity.applicationContext!!
 
     actual constructor(props: P) : this() {
-        this.props = props
+        this.realProps = props
     }
 
     actual open fun alert(msg: Any?) {
@@ -62,7 +61,7 @@ actual abstract class Component<P : CProps, S : CState> actual constructor() : A
         super.onDestroy()
     }
 
-    open fun showLoading(message: String) = child(Loading::class, Loading.Props()) {
+    open fun showLoading(message: String) = child(Loading::class.java, Loading.Props()) {
         catching {
             attrs {
                 msg = message
@@ -71,7 +70,7 @@ actual abstract class Component<P : CProps, S : CState> actual constructor() : A
         }
     }
 
-    open fun showError(message: String, actions: List<Action> = listOf()) = child(Error::class, Error.Props()) {
+    open fun showError(message: String, actions: List<Action> = listOf()) = child(Error::class.java, Error.Props()) {
         attrs {
             msg = message
             theme = props.theme
