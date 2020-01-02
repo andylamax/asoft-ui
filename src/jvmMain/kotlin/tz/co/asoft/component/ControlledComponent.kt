@@ -19,12 +19,14 @@ abstract class ControlledComponent<P : Any, I, S, V : ViewModel<I, S>> : Compone
 
     init {
         state = UIState()
-        launch {
-            viewModel.ui.bind()
-        }
     }
 
-    open fun post(i: I) = launch { viewModel.post(i) }
+    override fun onReady() {
+        super.onReady()
+        viewModel.ui.bind()
+    }
+
+    fun post(i: I) = launch { viewModel.post(i) }
 
     fun LiveData<S>.bind() = observe { setState { ui = it } }
 

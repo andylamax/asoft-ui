@@ -50,8 +50,8 @@ abstract class Component<P : Any, S : Any> : AndroidComponent<P, S>(), Coroutine
 
     fun <T> LiveData<T>.observe(action: (T) -> Unit) = onChange(this@Component, action)
 
-    override fun onStop() {
-        super<AndroidComponent>.onStop()
+    override fun onPause() {
+        super<AndroidComponent>.onPause()
     }
 
     override fun onDestroy() {

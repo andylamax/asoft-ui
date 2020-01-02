@@ -46,5 +46,5 @@ abstract class ControlledComponent<P : RProps, I, S, V : ViewModel<I, S>> : Comp
 
     fun Flow<S>.bind() = launch { onEach { setState { ui = it } }.collect() }
 
-    open fun post(i: I) = launch { viewModel.post(i) }
+    fun post(i: I) = launch { viewModel.post(i) }
 }

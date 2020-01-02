@@ -38,7 +38,7 @@ abstract class Component<P : Any, S : Any> : JFXComponent<P, S>(), CoroutineScop
             }
         }
     }
-    
+
     override fun onReady() {
         executeRender()
     }
@@ -67,7 +67,7 @@ abstract class Component<P : Any, S : Any> : JFXComponent<P, S>(), CoroutineScop
 
     override fun onUndock() {
         job.cancel()
-        onStop()
+        onPause()
         super.onUndock()
     }
 

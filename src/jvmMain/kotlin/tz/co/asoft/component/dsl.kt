@@ -9,7 +9,9 @@ inline fun <reified P : Any, reified S : Any, T : JFXComponent<P, S>> ParentCont
 inline fun <reified P : Any, reified S : Any, T : JFXComponent<P, S>> childFragment(clazz: Class<T>, props: P?, noinline handler: T.() -> Unit): T {
     val frag = clazz.newInstance() as T
     frag.realProps = props ?: P::class.java.newInstance()
-    frag.realState = S::class.java.newInstance()
+    if (frag.realState == null) {
+        frag.realState = S::class.java.newInstance()
+    }
     frag.apply(handler)
     return frag
 }

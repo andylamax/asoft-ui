@@ -35,7 +35,6 @@ abstract class Component<P : RProps, S : RState> : RComponent<P, S>, CoroutineSc
     }
 
     override fun componentDidMount() {
-        super.componentDidMount()
         onReady()
         onResume()
     }
@@ -55,8 +54,7 @@ abstract class Component<P : RProps, S : RState> : RComponent<P, S>, CoroutineSc
 
     override fun componentWillUnmount() {
         job.cancel()
-        onStop()
+        onPause()
         onDestroy()
-        super.componentWillUnmount()
     }
 }

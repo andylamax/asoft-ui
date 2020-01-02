@@ -21,7 +21,7 @@ abstract class ControlledComponent<P : Any, I, S, V : ViewModel<I, S>> : Compone
         state = UIState()
     }
 
-    open fun post(i: I) = launch { viewModel.post(i) }
+    fun post(i: I) = launch { viewModel.post(i) }
     
     override fun onResume() {
         super.onResume()
