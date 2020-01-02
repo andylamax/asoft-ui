@@ -10,14 +10,14 @@ import react.RBuilder
 import react.RProps
 import react.RState
 import react.setState
-import tz.co.asoft.component.ControlledComponent.State
+import tz.co.asoft.component.ControlledComponent.UIState
 import tz.co.asoft.rx.LiveData
 import tz.co.asoft.viewmodel.ViewModel
 
-abstract class ControlledComponent<P : RProps, I, S, V : ViewModel<I, S>> : Component<P, State<S>> {
+abstract class ControlledComponent<P : RProps, I, S, V : ViewModel<I, S>> : Component<P, UIState<S>> {
     abstract val viewModel: V
 
-    class State<S> : RState {
+    class UIState<S> : RState {
         var ui: S? = null
     }
 
@@ -26,7 +26,7 @@ abstract class ControlledComponent<P : RProps, I, S, V : ViewModel<I, S>> : Comp
     constructor(props: P) : super(props)
 
     init {
-        state = State()
+        state = UIState()
     }
 
     abstract fun RBuilder.render(ui: S)
