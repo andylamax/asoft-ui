@@ -40,6 +40,13 @@ abstract class Component<P : Any, S : Any> : AndroidComponent<P, S>(), Coroutine
         super<AndroidComponent>.onResume()
     }
 
+    protected fun syncState(context: CoroutineContext = coroutineContext, buildState: suspend S.() -> Unit) {
+        launch(context) {
+            state.buildState()
+            setState { }
+        }
+    }
+
     open fun showLoading(message: String) = child(Loading::class.java, Loading.Props()) {
         attrs { msg = message }
     }

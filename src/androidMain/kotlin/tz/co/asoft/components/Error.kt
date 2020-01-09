@@ -9,6 +9,7 @@ import tz.co.asoft.ui.R
 import tz.co.asoft.ui.ViewHolder
 import tz.co.asoft.ui.action.Action
 
+@Deprecated("use tz.co.asoft.component.Error")
 class Error : ScopedComponent<Error.Props, CState>() {
     class Props : CProps() {
         var msg = ""

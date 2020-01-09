@@ -4,13 +4,15 @@ import kotlinx.css.*
 import kotlinx.html.js.onClickFunction
 import react.RBuilder
 import react.RHandler
+import react.RState
 import styled.css
 import styled.styledDiv
+import tz.co.asoft.component.Component
 import tz.co.asoft.ui.react.icons.reacticons.faArrowLeft
 import tz.co.asoft.ui.theme.main
 import tz.co.asoft.components.Backable.Props
 
-class Backable : Component<Props, CState>() {
+class Backable : Component<Props, RState>() {
     class Props : ModuleProps() {
         var onBack = {}
     }

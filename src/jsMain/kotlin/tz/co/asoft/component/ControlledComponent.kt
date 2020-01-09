@@ -42,8 +42,10 @@ abstract class ControlledComponent<P : RProps, I, S, V : ViewModel<I, S>> : Comp
 
     fun LiveData<S>.bind() = observe { setState { ui = it } }
 
+    @Deprecated("Do not bind channels to ui")
     fun Channel<S>.bind() = launch { consumeAsFlow().bind() }
 
+    @Deprecated("Do not bind flows to ui")
     fun Flow<S>.bind() = launch { onEach { setState { ui = it } }.collect() }
 
     fun post(i: I) = launch { viewModel.post(i) }

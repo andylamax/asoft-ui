@@ -22,7 +22,7 @@ abstract class ControlledComponent<P : Any, I, S, V : ViewModel<I, S>> : Compone
     }
 
     fun post(i: I) = launch { viewModel.post(i) }
-    
+
     override fun onResume() {
         super.onResume()
         viewModel.ui.bind()
@@ -30,8 +30,10 @@ abstract class ControlledComponent<P : Any, I, S, V : ViewModel<I, S>> : Compone
 
     fun LiveData<S>.bind() = observe { setState { ui = it } }
 
+    @Deprecated("Do not bund channels to ui")
     fun Channel<S>.bind() = launch { consumeAsFlow().bind() }
 
+    @Deprecated("Do not bund flows to ui")
     fun Flow<S>.bind() = launch { onEach { setState { ui = it } }.collect() }
 
     abstract fun render(ui: S)

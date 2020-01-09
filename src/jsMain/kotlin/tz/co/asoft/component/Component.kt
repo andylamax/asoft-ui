@@ -27,7 +27,7 @@ abstract class Component<P : RProps, S : RState> : RComponent<P, S>, CoroutineSc
     override val coroutineContext: CoroutineContext
         get() = Dispatchers.Default + job
 
-    protected fun syncState(context: CoroutineContext, buildState: suspend S.() -> Unit) {
+    protected fun syncState(context: CoroutineContext = coroutineContext, buildState: suspend S.() -> Unit) {
         launch(context) {
             state.buildState()
             setState { }

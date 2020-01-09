@@ -51,6 +51,8 @@ class By(val selector: String) {
         fun className(className: String) = By(".$className")
         fun attr(name: String, value: String) = By("[$name='$value']")
         fun selector(selector: String) = By(selector)
+        fun tag(name: String) = By(name)
+        fun value(value: String) = attr("value", value)
     }
 }
 

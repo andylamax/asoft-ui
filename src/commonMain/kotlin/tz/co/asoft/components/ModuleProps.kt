@@ -1,4 +1,3 @@
 package tz.co.asoft.components
 
-
-expect abstract class ModuleProps() : BaseModuleProps
+expect open class ModuleProps() : BaseModuleProps

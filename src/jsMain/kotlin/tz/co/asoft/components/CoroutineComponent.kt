@@ -9,6 +9,7 @@ import kotlinx.coroutines.launch
 import react.RBuilder
 import tz.co.asoft.components.CoroutineComponent.UIState
 
+@Deprecated("Use Controlled Component")
 abstract class CoroutineComponent<P : CProps, S : Any> : ScopedComponent<P, UIState<S>>() {
     class UIState<S>(var ui: S?) : CState()
 

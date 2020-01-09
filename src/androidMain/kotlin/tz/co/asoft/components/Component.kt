@@ -9,6 +9,7 @@ import tz.co.asoft.platform.core.Activity
 import tz.co.asoft.tools.alert
 import tz.co.asoft.ui.action.Action
 
+@Deprecated("Use component form tz.co.asoft.component")
 actual abstract class Component<P : CProps, S : CState> actual constructor() : AndroidComponent<P, S>() {
 
     actual val activity: Activity get() = requireActivity()

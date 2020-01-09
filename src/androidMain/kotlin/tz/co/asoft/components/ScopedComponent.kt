@@ -6,6 +6,7 @@ import kotlinx.coroutines.Job
 import kotlinx.coroutines.launch
 import kotlin.coroutines.CoroutineContext
 
+@Deprecated("A Component is automatically scoped")
 actual abstract class ScopedComponent<P : CProps, S : CState> : Component<P, S>, CoroutineScope {
     actual constructor() : super()
     actual constructor(props: P) : super(props)

@@ -4,7 +4,7 @@ import tz.co.asoft.ui.theme.Theme
 import react.router.dom.RouteResultProps
 import tz.co.asoft.components.BaseModuleProps
 
-abstract class ModuleProps : BaseModuleProps() {
+open class ModuleProps : BaseModuleProps() {
     var theme = Theme()
     var themes = arrayOf<Theme>()
     var allPerms = arrayOf<String>()

@@ -5,13 +5,15 @@ import kotlinx.css.properties.s
 import kotlinx.css.properties.transition
 import kotlinx.html.js.onClickFunction
 import react.RBuilder
+import react.RState
 import styled.css
 import styled.styledDiv
+import tz.co.asoft.component.Component
+import tz.co.asoft.components.BadgeUI.Props
 import tz.co.asoft.ui.react.icons.loadingSvg
 import tz.co.asoft.ui.react.icons.reacticons.faSyncAlt
 import tz.co.asoft.ui.react.tools.onDesktop
 import tz.co.asoft.ui.react.tools.onMobile
-import tz.co.asoft.components.BadgeUI.Props
 
 class Badge {
     var value = "?"
@@ -19,7 +21,7 @@ class Badge {
     var title = "Products"
 }
 
-class BadgeUI(p: Props) : ScopedComponent<Props, CState>(p) {
+class BadgeUI(p: Props) : Component<Props, RState>(p) {
     class Props : ModuleProps() {
         var badge: Badge? = null
         var css: CSSBuilder.() -> Unit = {}

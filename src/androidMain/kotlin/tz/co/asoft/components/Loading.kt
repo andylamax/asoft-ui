@@ -6,6 +6,7 @@ import android.widget.TextView
 import tz.co.asoft.ui.R
 import tz.co.asoft.ui.ViewHolder
 
+@Deprecated("Use tz.co.asoft.component.Loading")
 class Loading : Component<Loading.Props, CState>() {
     class Props : CProps() {
         var msg = ""

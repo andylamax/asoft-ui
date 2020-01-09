@@ -1,23 +1,19 @@
 package tz.co.asoft.ui.react.widget.dropdown
 
-import tz.co.asoft.ui.theme.main
-import tz.co.asoft.ui.tools.newJsObject
-import tz.co.asoft.ui.react.tools.ThemedProps
-import tz.co.asoft.ui.react.tools.value
-import tz.co.asoft.ui.react.widget.dropdown.DropDownComponent.Props
-import tz.co.asoft.ui.react.widget.dropdown.DropDownComponent.State
 import kotlinx.css.*
 import kotlinx.css.properties.border
 import kotlinx.css.properties.boxShadow
 import kotlinx.html.js.onChangeFunction
-import react.RBuilder
-import react.RComponent
-import react.RHandler
-import react.RState
+import react.*
 import styled.css
 import styled.styledDiv
 import styled.styledOption
 import styled.styledSelect
+import tz.co.asoft.ui.react.tools.ThemedProps
+import tz.co.asoft.ui.react.tools.value
+import tz.co.asoft.ui.react.widget.dropdown.DropDownComponent.Props
+import tz.co.asoft.ui.react.widget.dropdown.DropDownComponent.State
+import tz.co.asoft.ui.theme.main
 
 class DropDownComponent(p: Props) : RComponent<Props, State>(p) {
 
@@ -30,7 +26,7 @@ class DropDownComponent(p: Props) : RComponent<Props, State>(p) {
     }
 
     class State(p: Props) : RState {
-        var value = p.value
+        var value = if (p.value.isBlank()) p.options.first() else p.value
     }
 
     init {
@@ -56,17 +52,6 @@ class DropDownComponent(p: Props) : RComponent<Props, State>(p) {
         }
 
         styledSelect {
-            attrs {
-                required = props.isRequired
-                onChangeFunction = {
-                    state.value = it.target.value
-                    props.onChange(props.options.indexOf(state.value), state.value)
-                }
-                name = props.name
-                if (state.value.isNotBlank()) {
-                    value = state.value
-                }
-            }
             css {
                 border = "none"
                 flexBasis = FlexBasis("100%")
@@ -77,6 +62,18 @@ class DropDownComponent(p: Props) : RComponent<Props, State>(p) {
                     outline = Outline.none
                 }
             }
+
+            attrs {
+                required = props.isRequired
+                onChangeFunction = {
+                    it.asDynamic().persist()
+                    setState { value = it.target.value }
+                    props.onChange(props.options.indexOf(state.value), state.value)
+                }
+                name = props.name
+            }
+
+            attrs["defaultValue"] = state.value
 
             props.data.forEach { (k, v) ->
                 attrs["data-$k"] = v
@@ -94,7 +91,6 @@ class DropDownComponent(p: Props) : RComponent<Props, State>(p) {
                         } else {
                             it
                         }
-//                        selected = it == state.value
                     }
                     +it
                 }
@@ -105,5 +101,6 @@ class DropDownComponent(p: Props) : RComponent<Props, State>(p) {
 
 fun RBuilder.dropDown(name: String = "", handler: RHandler<Props>) = child(DropDownComponent::class.js, Props()) {
     attrs.data["value"] = name
+    attrs.name = name
     handler()
 }

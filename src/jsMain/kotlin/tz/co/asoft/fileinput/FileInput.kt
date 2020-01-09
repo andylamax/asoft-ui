@@ -12,23 +12,24 @@ import org.w3c.files.get
 import react.RBuilder
 import react.RHandler
 import react.dom.input
+import react.setState
 import styled.css
 import styled.styledDiv
 import styled.styledH4
+import tz.co.asoft.component.Component
 import tz.co.asoft.components.CState
 import tz.co.asoft.components.ModuleProps
-import tz.co.asoft.components.ScopedComponent
+import tz.co.asoft.fileinput.FileInput.Props
+import tz.co.asoft.fileinput.FileInput.State
 import tz.co.asoft.io.file.File
 import tz.co.asoft.ui.react.tools.By
 import tz.co.asoft.ui.react.tools.View
 import tz.co.asoft.ui.react.tools.css
 import tz.co.asoft.ui.react.tools.find
 import tz.co.asoft.ui.react.widget.progress.progressBar
-import tz.co.asoft.fileinput.FileInput.Props
-import tz.co.asoft.fileinput.FileInput.State
 import kotlin.browser.document
 
-class FileInput : ScopedComponent<Props, State>() {
+class FileInput : Component<Props, State>() {
     class Props : ModuleProps() {
         var documentTitle = ""
         var onFileUploaded = { _: File -> }

@@ -30,8 +30,10 @@ abstract class ControlledComponent<P : Any, I, S, V : ViewModel<I, S>> : Compone
 
     fun LiveData<S>.bind() = observe { setState { ui = it } }
 
+    @Deprecated("Do not bind channels to ui")
     fun Channel<S>.bind() = launch { consumeAsFlow().bind() }
 
+    @Deprecated("Do not bind flows to ui")
     fun Flow<S>.bind() = launch { onEach { setState { ui = it } }.collect() }
 
     abstract fun render(ui: S)
