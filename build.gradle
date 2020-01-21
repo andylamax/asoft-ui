@@ -1,7 +1,7 @@
 buildscript {
     ext {
         kotlin_version = "1.3.61"
-        auth_version = "27.2.0"
+        auth_version = "28.0.0"
 
         coroutines_version = "1.3.3"
 
@@ -39,7 +39,7 @@ plugins {
 }
 
 group 'tz.co.asoft'
-version '6.2.0'
+version '7.0.0'
 
 apply plugin: 'com.android.library'
 apply plugin: 'maven-publish'
@@ -79,8 +79,8 @@ repositories {
 }
 kotlin {
     js() {
-        browser()
-        nodejs()
+//        browser()
+//        nodejs()
         compilations.all {
             tasks[compileKotlinTaskName].kotlinOptions {
                 kotlinOptions.metaInfo = true

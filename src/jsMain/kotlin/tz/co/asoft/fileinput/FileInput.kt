@@ -21,7 +21,7 @@ import tz.co.asoft.components.CState
 import tz.co.asoft.components.ModuleProps
 import tz.co.asoft.fileinput.FileInput.Props
 import tz.co.asoft.fileinput.FileInput.State
-import tz.co.asoft.io.file.File
+import tz.co.asoft.io.File
 import tz.co.asoft.ui.react.tools.By
 import tz.co.asoft.ui.react.tools.View
 import tz.co.asoft.ui.react.tools.css
