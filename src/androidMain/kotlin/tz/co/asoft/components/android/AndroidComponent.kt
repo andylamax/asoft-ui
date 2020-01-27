@@ -16,7 +16,7 @@ abstract class AndroidComponent<P : Any, S : Any> : Fragment(), Parent {
         set(value) {
             realProps = value
         }
-        get() = realProps ?: throw Cause("Props are not yet initialized")
+        get() = realProps ?: arguments?.props ?: throw Cause("Props are not yet initialized")
 
     @PublishedApi
     internal var realState: S? = null

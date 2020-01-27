@@ -2,6 +2,7 @@ package tz.co.asoft.component
 
 import android.app.Activity
 import android.os.Bundle
+import android.view.View
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.SupervisorJob
@@ -9,6 +10,7 @@ import kotlinx.coroutines.launch
 import tz.co.asoft.LifeCycleMethods
 import tz.co.asoft.components.android.AndroidComponent
 import tz.co.asoft.components.android.child
+import tz.co.asoft.platform.core.FragmentActivity
 import tz.co.asoft.rx.LiveData
 import tz.co.asoft.ui.action.Action
 import kotlin.coroutines.CoroutineContext
@@ -19,11 +21,15 @@ abstract class Component<P : Any, S : Any> : AndroidComponent<P, S>(), Coroutine
     override val coroutineContext: CoroutineContext
         get() = job + Dispatchers.Main
 
-    val application get() = activity.application
+    val application get() = act.application
 
-    val activity: Activity get() = requireActivity()
+    @Deprecated("Use act instead")
+    val activity: Activity
+        get() = requireActivity()
 
-    val ctx get() = activity.applicationContext!!
+    val act: FragmentActivity get() = requireActivity()
+
+    val ctx get() = act.applicationContext!!
 
     override fun executeRender() {
         launch(Dispatchers.Main) {
@@ -31,8 +37,8 @@ abstract class Component<P : Any, S : Any> : AndroidComponent<P, S>(), Coroutine
         }
     }
 
-    override fun onCreate(savedInstanceState: Bundle?) {
-        super.onCreate(savedInstanceState)
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        super.onViewCreated(view, savedInstanceState)
         onReady()
     }
 

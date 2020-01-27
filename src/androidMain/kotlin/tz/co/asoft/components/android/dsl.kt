@@ -16,7 +16,7 @@ inline fun <reified P : Any, reified S : Any, T : AndroidComponent<P, S>> childF
     frag.realState = S::class.java.newInstance()
     frag.apply(handler)
     frag.arguments = Bundle().apply {
-        append("props", p)
+        append("props", frag.realProps)
     }
     return frag
 }

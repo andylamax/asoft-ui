@@ -1,5 +1,4 @@
 package tz.co.asoft.components
 
-import tz.co.asoft.ui.theme.Theme
-
+@Deprecated("Don't use module props in android")
 actual open class ModuleProps : BaseModuleProps()
