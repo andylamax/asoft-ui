@@ -39,7 +39,7 @@ plugins {
 }
 
 group 'tz.co.asoft'
-version '7.0.0'
+version '7.1.0'
 
 apply plugin: 'com.android.library'
 apply plugin: 'maven-publish'
@@ -119,7 +119,7 @@ kotlin {
 
         jvmMain {
             dependencies {
-                implementation kotlin("stdlib-jdk8")
+                implementation kotlin("stdlib")
                 api "org.jetbrains.kotlinx:kotlinx-coroutines-javafx:$coroutines_version"
                 api "com.github.andylamax.asoft-auth:asoft-auth-jvm:$auth_version"
                 api "no.tornado:tornadofx:$tornadofx_version"
@@ -128,7 +128,7 @@ kotlin {
 
         androidMain {
             dependencies {
-                implementation kotlin("stdlib-jdk8")
+                implementation kotlin("stdlib")
                 api "org.jetbrains.kotlinx:kotlinx-coroutines-android:$coroutines_version"
                 api "com.google.code.gson:gson:$gson_version"
                 api "com.github.andylamax.asoft-auth:asoft-auth-android:$auth_version"
