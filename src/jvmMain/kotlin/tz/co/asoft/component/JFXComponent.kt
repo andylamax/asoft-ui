@@ -1,8 +1,11 @@
 package tz.co.asoft.component
 
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.GlobalScope
+import kotlinx.coroutines.delay
+import kotlinx.coroutines.launch
 import tornadofx.Fragment
 import tornadofx.vbox
-import tz.co.asoft.LifeCycleMethods
 import tz.co.asoft.persist.tools.Cause
 
 abstract class JFXComponent<P : Any, S : Any> : Fragment(), ParentContainer {
@@ -34,6 +37,9 @@ abstract class JFXComponent<P : Any, S : Any> : Fragment(), ParentContainer {
 
     override fun onDock() {
         super.onDock()
+        GlobalScope.launch(Dispatchers.Main) {
+
+        }
         executeRender()
     }
 

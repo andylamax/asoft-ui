@@ -1,5 +1,6 @@
 package tz.co.asoft.component
 
+import kotlinx.coroutines.Job
 import kotlinx.coroutines.channels.Channel
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.collect
@@ -29,6 +30,8 @@ abstract class ControlledComponent<P : RProps, I, S, V : ViewModel<I, S>> : Comp
         state = UIState()
     }
 
+    private var currentJobIntent: Job? = null
+
     abstract fun RBuilder.render(ui: S)
 
     override fun RBuilder.render() {
@@ -48,5 +51,8 @@ abstract class ControlledComponent<P : RProps, I, S, V : ViewModel<I, S>> : Comp
     @Deprecated("Do not bind flows to ui")
     fun Flow<S>.bind() = launch { onEach { setState { ui = it } }.collect() }
 
-    fun post(i: I) = launch { viewModel.post(i) }
+    fun post(i: I) {
+        currentJobIntent?.cancel()
+        currentJobIntent = launch { viewModel.post(i) }
+    }
 }

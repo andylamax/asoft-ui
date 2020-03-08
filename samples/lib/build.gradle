@@ -62,8 +62,12 @@ repositories {
 
 kotlin {
     js() {
-        browser()
-        nodejs()
+        browser() {
+            testTask {
+                enabled = false
+            }
+        }
+//        nodejs()
         compilations.all {
             tasks[compileKotlinTaskName].kotlinOptions {
                 kotlinOptions.metaInfo = true
@@ -94,19 +98,19 @@ kotlin {
         commonMain {
             dependencies {
                 api kotlin('stdlib-common')
-                api project(":")
-            }
-        }
-
-        jvmMain {
-            dependencies {
-                api kotlin("stdlib-jdk8")
+                implementation project(":")
             }
         }
 
         androidMain {
             dependencies {
-                api kotlin("stdlib-jdk8")
+                api kotlin("stdlib")
+            }
+        }
+
+        jvmMain {
+            dependencies {
+                api kotlin("stdlib")
             }
         }
 

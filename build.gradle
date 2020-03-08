@@ -1,25 +1,28 @@
 buildscript {
     ext {
-        kotlin_version = "1.3.61"
-        auth_version = "28.0.0"
+        kotlin_version = "1.3.70"
+        auth_version = "30.1.0"
 
-        coroutines_version = "1.3.3"
+        coroutines_version = "1.3.4"
 
-        androidx_fragment_version = "1.1.0"
-        androidx_appcompat_version = "1.0.0"
-        multidex_version = "2.0.0"
+        klock_version = "1.10.0"
+        krypto_version = "1.10.0"
+
+        androidx_fragment_version = "1.2.2"
+        androidx_appcompat_version = "1.1.0"
+        multidex_version = "2.0.1"
 
         tornadofx_version = "1.7.19"
         gson_version = "2.8.5"
 
-        kotlin_react_version = "16.9.0-pre.89-kotlin-1.3.60"
+        kotlin_react_version = "16.13.0-pre.93-kotlin-1.3.70"
         kotlin_react_dom_version = kotlin_react_version
         kotlin_react_router_dom_version = "4.3.1-pre.89-kotlin-1.3.60"
-        kotlin_styled_version = "1.0.0-pre.89-kotlin-1.3.60"
+        kotlin_styled_version = "1.0.0-pre.93-kotlin-1.3.70"
 
-        android_tools_version = "3.3.2"
+        android_tools_version = "3.6.0"// "3.3.2"
 
-        lifecycle_version = "2.1.0"
+        lifecycle_version = "2.2.0"
     }
 
     repositories {
@@ -35,11 +38,11 @@ buildscript {
 }
 
 plugins {
-    id 'kotlin-multiplatform' version '1.3.61'
+    id 'kotlin-multiplatform' version '1.3.70'
 }
 
 group 'tz.co.asoft'
-version '7.0.0'
+version '7.1.0'
 
 apply plugin: 'com.android.library'
 apply plugin: 'maven-publish'
@@ -48,7 +51,6 @@ android {
     compileSdkVersion 28
     defaultConfig {
         minSdkVersion 17
-        targetSdkVersion 28
         testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
     }
 
@@ -57,6 +59,10 @@ android {
             manifest.srcFile "src/androidMain/AndroidManifest.xml"
             res.srcDirs = ["src/androidMain/resources"]
         }
+    }
+
+    lintOptions {
+        abortOnError false
     }
 
     buildTypes {
@@ -69,18 +75,17 @@ android {
 repositories {
     google()
     jcenter()
+    mavenCentral()
     maven { url 'https://dl.bintray.com/kotlin/kotlin-eap' }
     maven { url "https://kotlin.bintray.com/kotlinx" }
     maven { url 'https://dl.bintray.com/kotlin/kotlin-js-wrappers' }
     maven { url 'https://dl.bintray.com/kotlinx/kotlinx' }
     maven { url "https://kotlin.bintray.com/kotlinx" }
+    maven { url = uri("https://dl.bintray.com/korlibs/korlibs/") }
     maven { url "https://jitpack.io" }
-    mavenCentral()
 }
 kotlin {
     js() {
-//        browser()
-//        nodejs()
         compilations.all {
             tasks[compileKotlinTaskName].kotlinOptions {
                 kotlinOptions.metaInfo = true
@@ -111,24 +116,17 @@ kotlin {
         commonMain {
             dependencies {
                 implementation kotlin('stdlib-common')
-
                 api "org.jetbrains.kotlinx:kotlinx-coroutines-core-common:$coroutines_version"
-                api "com.github.andylamax.asoft-auth:asoft-auth-metadata:$auth_version"
-            }
-        }
-
-        jvmMain {
-            dependencies {
-                implementation kotlin("stdlib-jdk8")
-                api "org.jetbrains.kotlinx:kotlinx-coroutines-javafx:$coroutines_version"
-                api "com.github.andylamax.asoft-auth:asoft-auth-jvm:$auth_version"
-                api "no.tornado:tornadofx:$tornadofx_version"
+                api("com.github.andylamax.asoft-auth:asoft-auth-metadata:$auth_version") {
+                    exclude group: "com.soywiz.korlibs.klock"
+                    exclude group: "com.soywiz.korlibs.krypto"
+                }
             }
         }
 
         androidMain {
             dependencies {
-                implementation kotlin("stdlib-jdk8")
+                implementation kotlin("stdlib")
                 api "org.jetbrains.kotlinx:kotlinx-coroutines-android:$coroutines_version"
                 api "com.google.code.gson:gson:$gson_version"
                 api "com.github.andylamax.asoft-auth:asoft-auth-android:$auth_version"
@@ -138,53 +136,60 @@ kotlin {
                 api "androidx.multidex:multidex:$multidex_version"
             }
         }
+
+        jvmMain {
+            dependencies {
+                implementation kotlin("stdlib")
+                api "org.jetbrains.kotlinx:kotlinx-coroutines-javafx:$coroutines_version"
+                api "com.github.andylamax.asoft-auth:asoft-auth-jvm:$auth_version"
+                api "no.tornado:tornadofx:$tornadofx_version"
+            }
+        }
+
         jsMain {
             dependencies {
                 implementation kotlin('stdlib-js')
-
                 api "org.jetbrains.kotlinx:kotlinx-coroutines-core-js:$coroutines_version"
-
                 api "com.github.andylamax.asoft-auth:asoft-auth-js:$auth_version"
-
                 api "org.jetbrains:kotlin-react:$kotlin_react_version"
                 api "org.jetbrains:kotlin-react-dom:$kotlin_react_dom_version"
                 api "org.jetbrains:kotlin-styled:$kotlin_styled_version"
                 api "org.jetbrains:kotlin-react-router-dom:$kotlin_react_router_dom_version"
 
-                api(npm("core-js", "3.0.0"))
-                api(npm("react", "16.9.0"))
-                api(npm("react-dom", "16.9.0"))
-                api(npm("styled-components", "4.3.2"))
-                api(npm("inline-style-prefixer", "5.1.0"))
-                api(npm("react-router-dom", "5.0.1"))
-                api(npm("text-encoding", "0.7.0"))
-
-                api(npm('react-responsive-carousel', '3.1.47'))
-                api(npm('react-event-timeline', '1.5.4'))
-
-                api(npm("echarts", "4.2.1"))
-                api(npm("echarts-for-react", "2.0.14"))
-
-                api(npm("react-tabs", "3.0.0"))
-                api(npm("react-table", "6.9.2"))
-                api(npm("react-draft-wysiwyg", "1.13.2"))
-                api(npm("draft-js", "0.10.5"))
-                api(npm("draft-js-export-html", "1.4.1"))
-                api(npm("react-icons", "3.5.0"))
-
-                api(npm("@react-google-maps/api", "1.3.0"))
-
-                api(npm("file-loader", "*"))
-                api(npm("style-loader", "*"))
-                api(npm("css-loader", "*"))
-                api(npm("less", "*"))
-                api(npm("less-loader", "*"))
-                api(npm("babel-loader", "8"))
-
-                //
-                api(npm("@babel/core", "*"))
-                api(npm("@babel/preset-env", "*"))
-                api(npm("@babel/preset-react", "*"))
+//                api(npm("core-js", "3.0.0"))
+//                api(npm("react", "16.9.0"))
+//                api(npm("react-dom", "16.9.0"))
+//                api(npm("styled-components", "4.3.2"))
+//                api(npm("inline-style-prefixer", "5.1.0"))
+//                api(npm("react-router-dom", "5.0.1"))
+//                api(npm("text-encoding", "0.7.0"))
+//
+//                api(npm('react-responsive-carousel', '3.1.47'))
+//                api(npm('react-event-timeline', '1.5.4'))
+//
+//                api(npm("echarts", "4.2.1"))
+//                api(npm("echarts-for-react", "2.0.14"))
+//
+//                api(npm("react-tabs", "3.0.0"))
+//                api(npm("react-table", "6.9.2"))
+//                api(npm("react-draft-wysiwyg", "1.13.2"))
+//                api(npm("draft-js", "0.10.5"))
+//                api(npm("draft-js-export-html", "1.4.1"))
+//                api(npm("react-icons", "3.5.0"))
+//
+//                api(npm("@react-google-maps/api", "1.3.0"))
+//
+//                api(npm("file-loader", "*"))
+//                api(npm("style-loader", "*"))
+//                api(npm("css-loader", "*"))
+//                api(npm("less", "*"))
+//                api(npm("less-loader", "*"))
+//                api(npm("babel-loader", "8"))
+//
+//                //
+//                api(npm("@babel/core", "*"))
+//                api(npm("@babel/preset-env", "*"))
+//                api(npm("@babel/preset-react", "*"))
             }
         }
     }
