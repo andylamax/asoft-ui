@@ -42,7 +42,7 @@ plugins {
 }
 
 group 'tz.co.asoft'
-version '7.1.0'
+version '7.2.0'
 
 apply plugin: 'com.android.library'
 apply plugin: 'maven-publish'
