@@ -4,13 +4,14 @@ import kotlinx.coroutines.*
 import tz.co.asoft.LifeCycleMethods
 import tz.co.asoft.platform.core.Activity
 import tz.co.asoft.platform.core.Ctx
+import tz.co.asoft.platform.core.FragmentActivity
 import tz.co.asoft.rx.LiveData
 import tz.co.asoft.ui.action.Action
 import kotlin.coroutines.CoroutineContext
 
 abstract class Component<P : Any, S : Any> : JFXComponent<P, S>(), CoroutineScope, LifeCycleMethods {
     companion object {
-        val globalActivity = Activity()
+        val globalActivity = FragmentActivity()
     }
 
     protected val job = SupervisorJob()
@@ -21,6 +22,8 @@ abstract class Component<P : Any, S : Any> : JFXComponent<P, S>(), CoroutineScop
     val application get() = app
 
     val activity: Activity get() = globalActivity
+
+    val act: FragmentActivity get() = globalActivity
 
     val ctx: Ctx get() = activity
 

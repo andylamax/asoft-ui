@@ -6,6 +6,7 @@ import tz.co.asoft.LifeCycleMethods
 import tz.co.asoft.components.ModuleProps
 import tz.co.asoft.platform.core.Activity
 import tz.co.asoft.platform.core.Ctx
+import tz.co.asoft.platform.core.FragmentActivity
 import tz.co.asoft.rx.LiveData
 import tz.co.asoft.ui.action.Action
 import tz.co.asoft.ui.react.composites.async.Error
@@ -17,10 +18,12 @@ abstract class Component<P : RProps, S : RState> : RComponent<P, S>, CoroutineSc
     constructor(props: P) : super(props)
 
     companion object {
-        val globalActivity = Activity()
+        val globalActivity = FragmentActivity()
     }
 
-    inline val ctx: Ctx get() = globalActivity
+    val act get() = globalActivity
+
+    val ctx: Ctx get() = globalActivity
 
     protected val job = SupervisorJob()
 

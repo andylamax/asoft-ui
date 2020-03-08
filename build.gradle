@@ -124,6 +124,15 @@ kotlin {
             }
         }
 
+        jvmMain {
+            dependencies {
+                implementation kotlin("stdlib")
+                api "org.jetbrains.kotlinx:kotlinx-coroutines-javafx:$coroutines_version"
+                api "com.github.andylamax.asoft-auth:asoft-auth-jvm:$auth_version"
+                api "no.tornado:tornadofx:$tornadofx_version"
+            }
+        }
+
         androidMain {
             dependencies {
                 implementation kotlin("stdlib")
