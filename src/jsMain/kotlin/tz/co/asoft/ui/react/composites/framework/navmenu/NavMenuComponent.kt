@@ -8,7 +8,7 @@ import react.*
 import react.router.dom.routeLink
 import styled.css
 import styled.styledDiv
-import tz.co.asoft.auth.usecase.permissions.hasPermits
+//import tz.co.asoft.auth.usecase.permissions.hasPermits
 import tz.co.asoft.ui.module.Module
 import tz.co.asoft.ui.module.ModuleProps
 import tz.co.asoft.ui.react.composites.framework.navmenu.NavMenuComponent.Props
@@ -33,7 +33,7 @@ class NavMenuComponent : RComponent<Props, State>() {
     private val menus: List<Module.Section>
         get() {
             state.isExpanded = state.isExpanded && module.isSelected()
-            return module.sections.filter { it.isMenu && props.user.hasPermits(it.permits) }
+            return module.sections.filter { it.isMenu && it.show() }
         }
 
     private fun Module.isSelected(): Boolean {

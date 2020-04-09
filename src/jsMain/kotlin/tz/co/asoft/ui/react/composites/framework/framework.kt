@@ -10,7 +10,7 @@ import react.router.dom.hashRouter
 import styled.css
 import styled.styledDiv
 import styled.styledSection
-import tz.co.asoft.auth.User
+//import tz.co.asoft.auth.User
 import tz.co.asoft.ui.module.Module
 import tz.co.asoft.ui.module.Page
 import tz.co.asoft.ui.module.WebsiteProps
@@ -32,7 +32,9 @@ class FrameworkComponent(p: Props) : RComponent<Props, State>(p) {
         var footer = "Footer"
         var title = "Title"
         var onSignOut = {}
-        var user: User? = null
+
+        //        var user: User? = null
+        var showDashboard = false
         var modules = arrayOf<Module>()
         var pages = arrayOf<Page>()
         lateinit var website: KClass<*>
@@ -69,7 +71,7 @@ class FrameworkComponent(p: Props) : RComponent<Props, State>(p) {
     private fun RBuilder.navPane() = child(NavPane::class) {
         attrs {
             title = props.title
-            user = props.user!!
+//            user = props.user!!
             theme = state.theme
             selectedSection = state.selectedSection
             footer = props.footer
@@ -92,7 +94,7 @@ class FrameworkComponent(p: Props) : RComponent<Props, State>(p) {
         attrs {
             theme = state.theme
             title = state.title
-            user = props.user!!
+//            user = props.user!!
             modules = props.modules
             themes = props.themes
             setTheme = {
@@ -174,7 +176,7 @@ class FrameworkComponent(p: Props) : RComponent<Props, State>(p) {
         attrs.theme = state.theme
         attrs.footer = props.footer
         attrs.pages = props.pages
-        attrs.onLogin = { _, prop ->
+        attrs.onLogin = { prop ->
             history = prop!!.history
             login()
         }
@@ -190,7 +192,7 @@ class FrameworkComponent(p: Props) : RComponent<Props, State>(p) {
             }
         }
         return hashRouter {
-            if (props.user == null) {
+            if (!props.showDashboard) {
                 anonymousPage()
             } else {
                 dashboardSection()

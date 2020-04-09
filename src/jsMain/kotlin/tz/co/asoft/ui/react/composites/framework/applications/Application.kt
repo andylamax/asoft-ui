@@ -17,7 +17,6 @@ import styled.css
 import styled.styledDiv
 import styled.styledImg
 import styled.styledSection
-import tz.co.asoft.auth.usecase.permissions.hasPermits
 import tz.co.asoft.ui.module.Module
 import tz.co.asoft.ui.module.ModuleProps
 import tz.co.asoft.ui.module.ScopedRComponent
@@ -32,6 +31,8 @@ class Application : ScopedRComponent<Props, State>() {
         var onDrawerOpen = {}
         var onLogout = {}
         var title = "Module Name"
+        var userName = "username"
+        var userPhoto = ""
         var onRouteResultHistory: (RouteResultHistory) -> Unit = { }
     }
 
@@ -127,7 +128,8 @@ class Application : ScopedRComponent<Props, State>() {
                             display = Display.none
                         }
                     }
-                    +props.user.name
+                    +props.userName
+//                    +props.user.name
                 }
 
                 styledDiv {
@@ -137,8 +139,8 @@ class Application : ScopedRComponent<Props, State>() {
                         +ApplicationSideStyles.userImage
                     }
 
-                    if (props.user.photoUrl.isNotEmpty()) {
-                        styledImg(src = props.user.photoUrl) {
+                    if (props.userPhoto.isNotEmpty()) {
+                        styledImg(src = props.userPhoto) {
                             css { +ApplicationSideStyles.userImage }
                         }
                     }
@@ -155,7 +157,7 @@ class Application : ScopedRComponent<Props, State>() {
         it.match.params.apply {
             theme = props.theme
             themes = props.themes
-            user = props.user
+//            user = props.user
 
             allPerms = getPermissions()
 
@@ -175,12 +177,10 @@ class Application : ScopedRComponent<Props, State>() {
     private fun RBuilder.loadModule(module: Module) {
         val mods = module.sections.toMutableList()
         mods.add(0, module.mainSection)
-        mods.forEach { section ->
-            if (props.user.hasPermits(section.permits) || section.permits.isEmpty()) {
-                route("/dashboard${section.route}", true, true) { routeProps: RouteResultProps<ModuleProps> ->
-                    props.onRouteResultHistory(routeProps.history)
-                    section.toComponent()(routeProps)
-                }
+        mods.filter { it.show() }.forEach { section ->
+            route("/dashboard${section.route}", true, true) { routeProps: RouteResultProps<ModuleProps> ->
+                props.onRouteResultHistory(routeProps.history)
+                section.toComponent()(routeProps)
             }
         }
     }

@@ -15,13 +15,14 @@ class Website : RComponent<Props, RState>() {
     object Props : WebsiteProps() {
         var onRouteResultHistory: (RouteResultHistory) -> Unit = { }
     }
+
     private fun Page.toReactComponent(): (RouteResultProps<WebsiteProps>) -> ReactElement = {
         it.match.params.apply {
             theme = props.theme
-            user = props.user
+//            user = props.user
             footer = props.footer
-            onLogin = { u,p->
-                props.onLogin(u,p)
+            onLogin = { p ->
+                props.onLogin(p)
             }
         }
         (component.unsafeCast<((RouteResultProps<WebsiteProps>) -> ReactElement)>()(it))

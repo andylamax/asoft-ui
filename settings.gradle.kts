@@ -2,14 +2,12 @@ pluginManagement {
     repositories {
         google()
         jcenter()
+        maven(url = "https://dl.bintray.com/kotlin/kotlin-eap")
     }
     resolutionStrategy {
         eachPlugin {
             if (requested.id.id.contains("kotlin.multiplatform")) {
                 useModule("org.jetbrains.kotlin:kotlin-gradle-plugin:${requested.version}")
-            }
-            if (requested.id.id.contains("serialization")) {
-                useModule("org.jetbrains.kotlin:kotlin-serialization:${requested.version}")
             }
             if (requested.id.id.contains("android")) {
                 useModule("com.android.tools.build:gradle:${requested.version}")
@@ -19,10 +17,3 @@ pluginManagement {
 }
 
 rootProject.name = "asoft-ui"
-
-//include ":samples:lib"
-//include ":samples:app"
-//include ":samples:jfx"
-//include ":samples:web"
-//include ":samples:node"
-//include ":samples:electron"

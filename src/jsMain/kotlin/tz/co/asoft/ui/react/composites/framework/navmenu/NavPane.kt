@@ -12,7 +12,7 @@ import react.RState
 import styled.css
 import styled.styledDiv
 import styled.styledSection
-import tz.co.asoft.auth.usecase.permissions.hasPermits
+//import tz.co.asoft.auth.usecase.permissions.hasPermits
 import tz.co.asoft.ui.module.Module
 import tz.co.asoft.ui.module.ModuleProps
 import tz.co.asoft.ui.react.icons.reacticons.mdClose
@@ -70,11 +70,10 @@ class NavPane : RComponent<Props, State>() {
         }
 
         props.modules.forEach { module ->
-            if (props.user.hasPermits(module.permits))
+            if (module.sections.any { it.show() })
                 navMenu(module) {
                     attrs {
                         theme = props.theme
-                        user = props.user
                         onClick = {
                             props.onMenuItemClicked(it)
                         }
